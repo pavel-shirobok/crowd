@@ -3,6 +3,7 @@ package
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.Crowd;
 	import flash.display.Sprite;
+	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	
 	/**
@@ -11,6 +12,7 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		private var _crowd:Crowd;
 		
 		public function Main():void 
 		{
@@ -24,8 +26,22 @@ package
 			
 			var sc:ISocialType;
 			
-			new Crowd()
-			// entry point
+			_crowd = new Crowd(true);
+			_crowd.debugFilePath = "debug_data.xml";
+			_crowd.addEventListener(Event.COMPLETE, onCrowdComplete);
+			_crowd.addEventListener(ErrorEvent.ERROR, onCrowdError);
+			_crowd.startCrowd(stage);
+			
+		}
+		
+		private function onCrowdComplete(e:Event):void 
+		{
+			trace(e);
+		}
+		
+		private function onCrowdError(e:ErrorEvent):void 
+		{
+			trace(e);
 		}
 		
 	}

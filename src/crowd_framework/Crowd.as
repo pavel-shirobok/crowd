@@ -2,9 +2,8 @@ package crowd_framework
 {
 	import com.ramshteks.as3.debug.Assert;
 	import com.ramshteks.as3.vars_holder.FlashVarsHolder;
-	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
-	import crowd_framework.core.SocialTypes;
+	import crowd_framework.SocialTypes;
 	import flash.display.Stage;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -19,12 +18,15 @@ package crowd_framework
 	 */
 	public class Crowd extends EventDispatcher
 	{
-		private var _debugFilePath:String;
+		private var _debugFilePath:String = "debug_data.xml";
 		private var _realFlashVars:FlashVarsHolder;
 		private var _alreadyStarted:Boolean = false;
 		private var _log_to_trace:Boolean;
 		private var _initdataHolder:Array = [];
 		private var _loader:URLLoader;
+		private var _stage:Stage;
+		
+		private var _debug_mode:Boolean = false;
 		
 		public function Crowd(log_to_trace:Boolean = true) {
 			_log_to_trace = log_to_trace;
@@ -40,6 +42,7 @@ package crowd_framework
 		public function startCrowd(stage:Stage):void {
 			Assert.isIncorrect(_alreadyStarted, "Crowd framework alrady started");
 			
+			_stage = stage;
 			_alreadyStarted = true;
 			
 			_realFlashVars = new FlashVarsHolder(stage);
@@ -54,6 +57,9 @@ package crowd_framework
 		
 		private function startAsStandalone():void 
 		{
+			dispatchLog("run as standalone");
+			
+			_debug_mode = true;
 			_loader = new URLLoader();
 			_loader.addEventListener(Event.COMPLETE, onComplete);
 			_loader.addEventListener(IOErrorEvent.IO_ERROR, onCommonLoadingError);
@@ -68,6 +74,32 @@ package crowd_framework
 		
 		private function onComplete(e:Event):void 
 		{
+			var xml:XML;
+			
+			try {
+				xml = new XML(_loader.data);
+			}catch (e:Error) {
+				dispatchError("Debug-XML parsing error, maybe xml not xml? ;)");
+				return;
+			}
+			
+			var default_soc_type:String = xml.@default;
+			var xml_socData:XMLList = xml.child(default_soc_type);
+			
+			if (xml_socData.toXMLString().length == 0) {
+				dispatchError("Default soc_type not found in debug xml. See root attributes 'default'");
+				return;
+			}
+			
+			
+			
+			dispatchComplete();
+			/*var envIniter:ICrowdEnvironmentInitializer = SocialQualifier.getEnvironmentByName(_initData, default_soc);
+			if (envIniter == null) {
+				dispatchError(StringUtils.printf("Unknown social type: %s%", default_soc));
+				return;
+			}*/
+			
 			/*var xml:XML = _loader.xmlData;
 			var default_soc_type:String = xml.@default;
 			var xml_socData:XMLList = xml.child(default_soc_type);
@@ -92,13 +124,15 @@ package crowd_framework
 		
 		private function startAsInRealSocialNetwork():void 
 		{
+			dispatchLog("run as in real social network");
 			
 		}
+		
+		//public function getSocialFactory
 		
 		private function dispatchLog(...log:Array):void {
 			if (_log_to_trace) {
 				trace(log.join(" "));
-				//dispatchEvent(new LogEvent(log));
 			}
 		}
 		
