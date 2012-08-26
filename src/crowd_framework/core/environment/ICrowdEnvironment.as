@@ -4,6 +4,7 @@ package crowd_framework.core.environment
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.request_builder.IRequestBuilder;
+	import crowd_framework.core.rest_api.loaders.IRestApiLoader;
 	
 	/**
 	 * ...

@@ -8,7 +8,7 @@ package crowd_framework.core.rest_api
 	 */
 	public interface IRestApi extends ISocialType
 	{
-		function new_loader():IRestApiLoader;
+		function getLoader():IRestApiLoader;
 	}
 
 }

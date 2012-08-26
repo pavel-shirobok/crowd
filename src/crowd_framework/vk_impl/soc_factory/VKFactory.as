@@ -2,10 +2,12 @@ package crowd_framework.vk_impl.soc_factory
 {
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
+	import crowd_framework.core.rest_api.IRestApiInitializer;
 	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.SocialTypes;
 	import crowd_framework.vk_impl.environment.VkontakteEnvironment;
 	import crowd_framework.vk_impl.js_api.VkontakteJSApi;
+	import crowd_framework.vk_impl.rest_api.VKRestApiInitializer;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	
 	/**
@@ -35,6 +37,13 @@ package crowd_framework.vk_impl.soc_factory
 		public function getJSApiInitParams():* 
 		{
 			return _initData.flash_vars;
+		}
+		
+		/* INTERFACE crowd_framework.core.soc_factory.ISocialFactory */
+		
+		public function getRestApiInitializer():IRestApiInitializer 
+		{
+			return new VKRestApiInitializer();
 		}
 		
 		public function get soc_type():String 

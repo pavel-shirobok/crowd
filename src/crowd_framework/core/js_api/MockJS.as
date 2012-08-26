@@ -14,8 +14,6 @@ package crowd_framework.core.js_api
 		public function MockJS(soc_type:String) 
 		{
 			_soc_type = soc_type;
-			
-			
 		}
 		
 		public function init(...param):void 

@@ -1,23 +1,22 @@
-package crowd_framework.vk_impl.soc_init_data 
+package crowd_framework.mailru_impl.soc_init_data 
 {
-	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.js_api.MockJS;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
 	import crowd_framework.SocialTypes;
-	import flash.display.Stage;
+	
 	/**
 	 * ...
-	 * @author 
+	 * @author Shirobok Pavel aka ramshteks
 	 */
-	public class VkontakteInitData implements ICrowdInitData
+	public class MailRuInitData implements ICrowdInitData 
 	{
-		private var _flash_vars:Object;
-		private var _mock_js:IJSApi
-
-		public function VkontakteInitData(stage:Stage) 
+		private var _mock_js:IJSApi;
+		private var _secret:String;
+		
+		public function MailRuInitData(secret:String) 
 		{
-			_flash_vars = stage.loaderInfo.parameters;
+			_secret = secret;
 			_mock_js = new MockJS(soc_type);
 		}
 		
@@ -27,8 +26,6 @@ package crowd_framework.vk_impl.soc_init_data
 		{
 			return 3;
 		}
-		
-		/* INTERFACE crowd_framework.core.soc_init_data.ICrowdInitData */
 		
 		public function set mock_js(value:IJSApi):void 
 		{
@@ -42,14 +39,14 @@ package crowd_framework.vk_impl.soc_init_data
 		
 		public function get soc_type():String 
 		{
-			return SocialTypes.VKONTAKTE;
+			return SocialTypes.MAILRU;
 		}
 		
-		
-		public function get flash_vars():Object 
+		public function get secret():String 
 		{
-			return _flash_vars;
-		}		
+			return _secret;
+		}
+		
 	}
 
 }

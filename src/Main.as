@@ -1,7 +1,9 @@
 package 
 {
+	import com.adobe.utils.ArrayUtil;
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.Crowd;
+	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.display.Sprite;
 	import flash.events.ErrorEvent;
@@ -29,6 +31,7 @@ package
 			
 			_crowd = new Crowd(true);
 			_crowd.registerSocialInitData(new VkontakteInitData(stage));
+			_crowd.registerSocialInitData(new MailRuInitData("sdfsdf"));
 			_crowd.debugFilePath = "debug_data.xml";
 			_crowd.addEventListener(Event.COMPLETE, onCrowdComplete);
 			_crowd.addEventListener(ErrorEvent.ERROR, onCrowdError);
@@ -39,11 +42,12 @@ package
 		private function onCrowdComplete(e:Event):void 
 		{
 			trace(e);
-			//trace("rewuest builder", Crowd.environment.request_builder);
-			//trace("js_api", Crowd.environment.js_api);
-			//trace("flash_vars", Crowd.environment.flash_vars);
-			//trace("soc_type", Crowd.environment.soc_type);
-			//trace("social_data", Crowd.environment.social_data);
+			
+			trace("rewuest builder", Crowd.environment.request_builder);
+			trace("js_api", Crowd.environment.js_api);
+			trace("flash_vars", Crowd.environment.flash_vars);
+			trace("soc_type", Crowd.environment.soc_type);
+			trace("social_data", Crowd.environment.social_data);
 		}
 		
 		private function onCrowdError(e:ErrorEvent):void 

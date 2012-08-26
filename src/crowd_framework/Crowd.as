@@ -1,28 +1,24 @@
 package crowd_framework 
 {
-	import com.ramshteks.as3.debug.Assert;
-	import com.ramshteks.as3.StringUtils;
-	import com.ramshteks.as3.vars_holder.FlashVarsHolder;
-	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import com.ramshteks.as3.vars_holder.XMLVarsHolder;
-	import crowd_framework.core.environment.ICrowdEnvironment;
-	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
-	import crowd_framework.core.events.JSApiErrorEvent;
-	import crowd_framework.core.js_api.IJSApi;
-	import crowd_framework.core.soc_factory.ISocialFactory;
-	import crowd_framework.core.soc_init_data.ICrowdInitData;
-	import crowd_framework.mailru_impl.soc_factory.MailRuFactory;
-	import crowd_framework.SocialTypes;
-	import crowd_framework.vk_impl.soc_factory.VKFactory;
-	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
-	import flash.display.Stage;
-	import flash.events.ErrorEvent;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
+	import com.ramshteks.as3.*;
+	import com.ramshteks.as3.debug.*;
+	import com.ramshteks.as3.vars_holder.*;
+	import crowd_framework.*;
+	import crowd_framework.core.environment.*;
+	import crowd_framework.core.events.*;
+	import crowd_framework.core.js_api.*;
+	import crowd_framework.core.rest_api.IRestApi;
+	import crowd_framework.core.rest_api.IRestApiInitializer;
+	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.soc_factory.*;
+	import crowd_framework.core.soc_init_data.*;
+	import crowd_framework.mailru_impl.soc_factory.*;
+	import crowd_framework.mailru_impl.soc_init_data.*;
+	import crowd_framework.vk_impl.soc_factory.*;
+	import crowd_framework.vk_impl.soc_init_data.*;
+	import flash.display.*;
+	import flash.events.*;
+	import flash.net.*;
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
@@ -30,6 +26,8 @@ package crowd_framework
 	public class Crowd extends EventDispatcher
 	{
 		private static var _environment:ICrowdEnvironment;
+		private static var _syncronizer:RestApiSynchronizer;
+		private static var _rest_api:IRestApi;
 		
 		private var _debugFilePath:String = "debug_data.xml";
 		private var _realFlashVars:FlashVarsHolder;
@@ -39,7 +37,6 @@ package crowd_framework
 		private var _loader:URLLoader;
 		private var _stage:Stage;
 		private var _soc_type:String = '';
-		
 		private var _debug_mode:Boolean = false;
 		
 		public function Crowd(log_to_trace:Boolean = true) {
@@ -95,6 +92,8 @@ package crowd_framework
 				return;
 			}
 			
+			_syncronizer = constructSynchronizer(initData);
+			
 			env.setFlashVarsHolder(new FlashVarsHolder(_stage));
 			
 			var js:IJSApi = factory.getJSApi();
@@ -109,6 +108,11 @@ package crowd_framework
 			var js_inits:* = factory.getJSApi()
 			
 			js.init(factory.getJSApiInitParams());
+			
+			var rest_api_initializer:IRestApiInitializer = factory.getRestApiInitializer()
+			rest_api_initializer.setEnvironment(_environment);
+			rest_api_initializer.setSynchronizer(_syncronizer);
+			
 			dispatchLog("start initialize js");
 		}
 		
@@ -119,6 +123,8 @@ package crowd_framework
 		
 		private function onJSConnect(e:Event):void 
 		{
+			
+			
 			dispatchComplete();
 		}
 		
@@ -155,20 +161,24 @@ package crowd_framework
 				return;
 			}
 			
-			var socFactory:ISocialFactory = getSocialFactoryByType(default_soc_type, initData);
-			if (socFactory == null) {
+			var factory:ISocialFactory = getSocialFactoryByType(default_soc_type, initData);
+			if (factory == null) {
 				dispatchError("No social factory for type '" + default_soc_type + "'");
 				return;
 			}
 			
 			dispatchLog("default social type '" + default_soc_type + "'");
-			
-			var envIniter:ICrowdEnvironmentInitializer = socFactory.getEnvironmentInitializer();
+			_syncronizer = constructSynchronizer(initData);
+			var envIniter:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
 			
 			envIniter.setFlashVarsHolder(new XMLVarsHolder(xml_socData));
 			envIniter.setJSApi(initData.mock_js);
 			
 			_environment = envIniter as ICrowdEnvironment;
+			
+			var rest_api_initializer:IRestApiInitializer = factory.getRestApiInitializer()
+			rest_api_initializer.setEnvironment(_environment);
+			rest_api_initializer.setSynchronizer(_syncronizer);
 			
 			dispatchComplete();
 		}
@@ -184,7 +194,7 @@ package crowd_framework
 					result = new VKFactory(initData as VkontakteInitData);
 					break;
 				case SocialTypes.MAILRU:
-					result = new MailRuFactory();
+					result = new MailRuFactory(initData as MailRuInitData);
 					break;
 			}
 			
@@ -206,6 +216,11 @@ package crowd_framework
 			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, message));
 		}
 		
+		private function constructSynchronizer(initData:ICrowdInitData):RestApiSynchronizer 
+		{
+			return new RestApiSynchronizer(1 / initData.request_per_second_limit * 1000);
+		}
+		
 		public function get debugFilePath():String {
 			return _debugFilePath;
 		}
@@ -216,6 +231,11 @@ package crowd_framework
 		
 		static public function get environment():ICrowdEnvironment {
 			return _environment;
+		}
+		
+		static public function get rest_api():IRestApi 
+		{
+			return _rest_api;
 		}
 	}
 
