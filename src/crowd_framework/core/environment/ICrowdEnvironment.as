@@ -3,6 +3,7 @@ package crowd_framework.core.environment
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
+	import crowd_framework.core.request_builder.IRequestBuilder;
 	
 	/**
 	 * ...

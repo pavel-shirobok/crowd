@@ -1,6 +1,6 @@
 package crowd_framework.utils.formatter 
 {
-	import ramshteks.as3.utils.interfaces.IFormatter;
+	import crowd_framework.utils.Param;
 	
 	/**
 	 * ...

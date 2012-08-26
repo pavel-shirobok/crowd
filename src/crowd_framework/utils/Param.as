@@ -12,7 +12,7 @@ package crowd_framework.utils
 		
 		public static function fromObject(src:Object):Array {
 			var res:Array = new Array();
-			for (var k:String in src) res.push(getFromRaw(k, src[k]));
+			for (var k:String in src) res.push(fromRaw(k, src[k]));
 			return res;
 		}
 		

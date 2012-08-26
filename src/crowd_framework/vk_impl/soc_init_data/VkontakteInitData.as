@@ -2,6 +2,7 @@ package crowd_framework.vk_impl.soc_init_data
 {
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
+	import crowd_framework.core.js_api.MockJS;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
 	import crowd_framework.SocialTypes;
 	import flash.display.Stage;
@@ -12,11 +13,12 @@ package crowd_framework.vk_impl.soc_init_data
 	public class VkontakteInitData implements ICrowdInitData
 	{
 		private var _flash_vars:Object;
-		private var _mock_js:IJSApi;
+		private var _mock_js:IJSApi
 
 		public function VkontakteInitData(stage:Stage) 
 		{
 			_flash_vars = stage.loaderInfo.parameters;
+			_mock_js = new MockJS(soc_type);
 		}
 		
 		/* INTERFACE crowd_framework.core.soc_init_data.ICrowdInitData */

@@ -109,7 +109,7 @@ package crowd_framework
 			var js_inits:* = factory.getJSApi()
 			
 			js.init(factory.getJSApiInitParams());
-			dispatchLog("init js");
+			dispatchLog("start initialize js");
 		}
 		
 		private function onJSConnectFailed(e:JSApiErrorEvent):void 

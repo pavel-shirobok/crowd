@@ -1,12 +1,17 @@
 package crowd_framework.vk_impl.environment 
 {
+	import com.ramshteks.as3.StringUtils;
 	import crowd_framework.core.environment.ISocialData;
 	import com.adobe.crypto.MD5;
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
-	import crowd_framework.core.environment.IRequestBuilder;
+	import crowd_framework.core.request_builder.IRequestBuilder;
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.SocialTypes;
+	import crowd_framework.utils.formatter.IFormatter;
+	import crowd_framework.utils.formatter.XMLFormatter;
+	import crowd_framework.utils.NetUtil;
+	import crowd_framework.utils.Param;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
@@ -16,7 +21,7 @@ package crowd_framework.vk_impl.environment
 	 * ...
 	 * @author 
 	 */
-	public class VkontakteEnvironment implements ICrowdEnvironmentInitializer 
+	public class VkontakteEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData
 	{
 		//ISocialData
 		private var _api_url:String;
@@ -41,14 +46,29 @@ package crowd_framework.vk_impl.environment
 			_initData = initData;
 		}
 		
-		public function parseVars(vars:IVarsHolder):void 
-		{
-			
-		}
-		
 		public function setJSApi(js_api:IJSApi):void 
 		{
 			_javaScript = js_api;
+		}
+		
+		public function get application_id():String 
+		{
+			return _application_id;
+		}
+		
+		public function get user_id():String 
+		{
+			return _user_id;
+		}
+		
+		public function get referrer():String 
+		{
+			return _referrer;
+		}
+		
+		public function get api_url():String 
+		{
+			return _api_url;
 		}
 		
 		public function setFlashVarsHolder(vars:IVarsHolder):void 
@@ -73,22 +93,18 @@ package crowd_framework.vk_impl.environment
 		
 		public function get request_builder():IRequestBuilder 
 		{
-			return null;
+			
+			return this as IRequestBuilder;
 		}
 		
 		public function get js_api():IJSApi 
 		{
-			return null;
+			return _javaScript as IJSApi;
 		}
 		
 		public function get social_data():ISocialData 
 		{
-			return null;
-		}
-		
-		public function get flash_vars():IVarsHolder 
-		{
-			return null;
+			return this as ISocialData;
 		}
 		
 		public function get soc_type():String 
@@ -96,41 +112,18 @@ package crowd_framework.vk_impl.environment
 			return SocialTypes.VKONTAKTE;
 		}
 		
-		public function get application_id():String 
-		{
-			return null;
-		}
-		
-		public function get user_id():String 
-		{
-			return null;
-		}
-		
-		public function get referrer():String 
-		{
-			return null;
-		}
-		
-		public function get api_url():String 
-		{
-			return null;
-		}
-		
-		/*public function getLocalData(formatter:IFormatter = null):String 
+		public function getLocalData(formatter:IFormatter = null):String 
 		{
 			if (formatter == null) formatter = new XMLFormatter();
 			return formatter.getString([new Param("sid", _sid), new Param("secret", _secret), new Param("viewer_id", _user_id)]);
 		}
 		
-		public function getAPIRequest(params:Array):URLRequest 
+		public function getAPIRequest(params:Object):URLRequest 
 		{
+			
 			var req:URLRequest = NetUtil.getPostURLRequest(_api_url);
 			
-			var n_params:Array = getStandardParams();
-			
-			for (var i:int = 0; i < params.length; i++) {
-				n_params.push(params[i]);
-			}
+			var n_params:Array = getStandardParams().concat(Param.fromObject(params));
 			
 			var sig:String = NetUtil.getSignature(n_params, _user_id, _secret);
 			
@@ -138,7 +131,7 @@ package crowd_framework.vk_impl.environment
 			n_params.push(new Param("sid", _sid));
 			
 			req.data = new URLVariables(n_params.join("&"));
-			trace(n_params.join("&"))
+			
 			return req;
 		}
 		
@@ -151,9 +144,9 @@ package crowd_framework.vk_impl.environment
 			return new URLVariables(StringUtils.printf("uid=%uid%&auth_key=%key%&soc_type=%type%", _user_id, _auth_key, SocialTypes.VKONTAKTE));// "uid=" + _user_id + "&auth_key=" + _auth_key + "&soc_type=" + );
 		}
 		
-		public function get requestMaker():IRequestMaker 
+		public function get flash_vars():IVarsHolder 
 		{
-			return this as IRequestMaker;
+			return _flashVarsHolder;
 		}
 		
 		public function get socialData():ISocialData 
@@ -161,20 +154,15 @@ package crowd_framework.vk_impl.environment
 			return this as ISocialData;
 		}
 		
-		public function get javascriptApi():ISocialJavaScriptAPI 
+		public function get javascriptApi():IJSApi 
 		{
-			return _javaScript as ISocialJavaScriptAPI;
+			return _javaScript as IJSApi;
 		}
-		
-		
 		
 		public function get flashVars():IVarsHolder 
 		{
 			return _flashVarsHolder;
 		}
 		
-		public function get type():String {
-			return SocialTypes.VKONTAKTE;
-		}	*/
 	}
 }
