@@ -4,6 +4,7 @@ package crowd_framework.vk_impl.soc_init_data
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.js_api.MockJS;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
+	import crowd_framework.RestApiFormat;
 	import crowd_framework.SocialTypes;
 	import flash.display.Stage;
 	/**
@@ -14,11 +15,24 @@ package crowd_framework.vk_impl.soc_init_data
 	{
 		private var _flash_vars:Object;
 		private var _mock_js:IJSApi
+		private var _rest_api_format:String = RestApiFormat.XML_FORMAT;
 
 		public function VkontakteInitData(stage:Stage) 
 		{
 			_flash_vars = stage.loaderInfo.parameters;
 			_mock_js = new MockJS(soc_type);
+		}
+		
+		/* INTERFACE crowd_framework.core.soc_init_data.ICrowdInitData */
+		
+		public function get rest_api_format():String 
+		{
+			return _rest_api_format;
+		}
+		
+		public function set rest_api_format(value:String):void 
+		{
+			_rest_api_format = value;
 		}
 		
 		/* INTERFACE crowd_framework.core.soc_init_data.ICrowdInitData */

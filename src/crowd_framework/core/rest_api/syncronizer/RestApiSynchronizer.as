@@ -14,7 +14,6 @@ package crowd_framework.core.rest_api.syncronizer
 		private var _checkInterval:int;
 		public function RestApiSynchronizer(delay:int = 333) 
 		{
-			trace("rest", delay)
 			_checkInterval = setInterval(checkQueue, delay);
 		}
 		

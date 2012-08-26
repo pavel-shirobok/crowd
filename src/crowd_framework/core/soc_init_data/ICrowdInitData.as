@@ -12,6 +12,10 @@ package crowd_framework.core.soc_init_data
 	public interface ICrowdInitData extends ISocialType
 	{
 		function get request_per_second_limit():int;
+		
+		function get rest_api_format():String;
+		function set rest_api_format(v:String):void;
+		
 		function set mock_js(v:IJSApi):void;
 		function get mock_js():IJSApi;
 	}

@@ -43,11 +43,11 @@ package
 		{
 			trace(e);
 			
-			trace("rewuest builder", Crowd.environment.request_builder);
+			/*trace("rewuest builder", Crowd.environment.request_builder);
 			trace("js_api", Crowd.environment.js_api);
 			trace("flash_vars", Crowd.environment.flash_vars);
 			trace("soc_type", Crowd.environment.soc_type);
-			trace("social_data", Crowd.environment.social_data);
+			trace("social_data", Crowd.environment.social_data);*/
 		}
 		
 		private function onCrowdError(e:ErrorEvent):void 
