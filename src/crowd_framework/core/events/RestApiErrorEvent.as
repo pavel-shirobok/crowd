@@ -1,6 +1,7 @@
 package crowd_framework.core.events 
 {
-	import crowd_framework.core.rest_api.RestApiErrorReport;
+
+	import crowd_framework.core.rest_api.IRestApiErrorReport;
 	import flash.events.Event;
 	
 	/**
@@ -9,9 +10,9 @@ package crowd_framework.core.events
 	 */
 	public class RestApiErrorEvent extends Event 
 	{
-		private var _apiError:RestApiErrorReport;
+		private var _apiError:IRestApiErrorReport;
 		public static const API_ERROR:String = "APIErrorEvent-API_ERROR";
-		public function RestApiErrorEvent(type:String, apiError:RestApiErrorReport) 
+		public function RestApiErrorEvent(type:String, apiError:IRestApiErrorReport) 
 		{ 
 			super(type);
 			_apiError = apiError;			
@@ -27,7 +28,7 @@ package crowd_framework.core.events
 			return formatToString("APIErrorEvent", "type", "bubbles", "cancelable", "eventPhase"); 
 		}
 		
-		public function get apiError():RestApiErrorReport 
+		public function get apiError():IRestApiErrorReport 
 		{
 			return _apiError;
 		}

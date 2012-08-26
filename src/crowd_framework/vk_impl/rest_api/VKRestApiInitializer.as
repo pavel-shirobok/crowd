@@ -18,7 +18,7 @@ package crowd_framework.vk_impl.rest_api
 		
 		override public function getLoader():IRestApiLoader 
 		{
-			return null;
+			return new VKLoader(synchronizer);
 		}
 		
 		override public function get soc_type():String 

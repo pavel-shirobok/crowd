@@ -3,6 +3,7 @@ package crowd_framework.core.rest_api.loaders
 	import crowd_framework.core.events.RestApiErrorEvent;
 	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.IRestApiErrorReport;
+	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
@@ -13,7 +14,11 @@ package crowd_framework.core.rest_api.loaders
 	public class AbstractRestApiLoader extends EventDispatcher implements IRestApiLoader
 	{
 		private var _soc_type:String;
-		public function AbstractRestApiLoader(soc_type:String):void {
+		private var _synchronizer:RestApiSynchronizer;
+		private var _req:URLRequest;
+		
+		public function AbstractRestApiLoader(soc_type:String, synchronizer:RestApiSynchronizer):void {
+			_synchronizer = synchronizer;
 			_soc_type = soc_type;
 		}
 		
@@ -31,6 +36,20 @@ package crowd_framework.core.rest_api.loaders
 		
 		public function load(req:URLRequest):void 
 		{
+			_req = req;
+			addEventListener(Event.SELECT, onSelectLoader)
+			_synchronizer.putInQueue(this);
+			realLoad(req);
+		}
+		
+		protected function onSelectLoader(e:Event):void 
+		{
+			removeEventListener(Event.SELECT, onSelectLoader);
+			realLoad(request);
+		}
+		
+		protected function realLoad(req:URLRequest):void 
+		{
 			throw new Error("need to implement")
 		}
 		
@@ -42,6 +61,11 @@ package crowd_framework.core.rest_api.loaders
 		public function get soc_type():String 
 		{
 			return _soc_type;
+		}
+		
+		protected function get request():URLRequest 
+		{
+			return _req;
 		}
 	}
 

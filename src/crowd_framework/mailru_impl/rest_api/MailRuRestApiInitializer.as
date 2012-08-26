@@ -19,7 +19,7 @@ package crowd_framework.mailru_impl.rest_api
 		
 		override public function getLoader():IRestApiLoader 
 		{
-			return null;
+			return new MailruLoader(synchronizer);
 		}
 		
 		override public function get soc_type():String 
