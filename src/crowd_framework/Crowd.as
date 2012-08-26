@@ -1,10 +1,14 @@
 package crowd_framework 
 {
 	import com.ramshteks.as3.debug.Assert;
+	import com.ramshteks.as3.StringUtils;
 	import com.ramshteks.as3.vars_holder.FlashVarsHolder;
+	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import com.ramshteks.as3.vars_holder.XMLVarsHolder;
 	import crowd_framework.core.environment.ICrowdEnvironment;
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
+	import crowd_framework.core.events.JSApiErrorEvent;
+	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
 	import crowd_framework.mailru_impl.soc_factory.MailRuFactory;
@@ -34,6 +38,7 @@ package crowd_framework
 		private var _initdataHolder:Array = [];
 		private var _loader:URLLoader;
 		private var _stage:Stage;
+		private var _soc_type:String = '';
 		
 		private var _debug_mode:Boolean = false;
 		
@@ -55,8 +60,8 @@ package crowd_framework
 			_alreadyStarted = true;
 			
 			_realFlashVars = new FlashVarsHolder(stage);
-			
-			if (SocialTypes.getSocialTypeByFlashVars(_realFlashVars) == SocialTypes.UNKNOW) {
+			_soc_type = SocialTypes.getSocialTypeByFlashVars(_realFlashVars);
+			if (_soc_type == SocialTypes.UNKNOW) {
 				startAsStandalone();
 			}else {
 				startAsInRealSocialNetwork();
@@ -76,13 +81,52 @@ package crowd_framework
 			_loader.load(new URLRequest(_debugFilePath));
 		}
 		
-		private function onCommonLoadingError(e:ErrorEvent):void 
+		private function startAsInRealSocialNetwork():void 
 		{
+			dispatchLog("run as in real social network");
+			
+			var initData:ICrowdInitData = _initdataHolder[_soc_type];
+			
+			var factory:ISocialFactory = getSocialFactoryByType(_soc_type, initData);
+			var env:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
+			
+			if (env == null) {
+				dispatchError(StringUtils.printf("Unsupported social type '%s%'", _soc_type));
+				return;
+			}
+			
+			env.setFlashVarsHolder(new FlashVarsHolder(_stage));
+			
+			var js:IJSApi = factory.getJSApi();
+			
+			js.addEventListener(Event.CONNECT, onJSConnect);
+			js.addEventListener(JSApiErrorEvent.CONNECT_FAILED, onJSConnectFailed);
+			
+			_environment = env;
+			
+			env.setJSApi(js);
+			
+			var js_inits:* = factory.getJSApi()
+			
+			js.init(factory.getJSApiInitParams());
+			dispatchLog("init js");
+		}
+		
+		private function onJSConnectFailed(e:JSApiErrorEvent):void 
+		{
+			dispatchError(StringUtils.printf("JS connection crash with message '%m%'", e.message));
+		}
+		
+		private function onJSConnect(e:Event):void 
+		{
+			dispatchComplete();
+		}
+		
+		private function onCommonLoadingError(e:ErrorEvent):void {
 			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, "Error loading debug file. Type:" + e.type));
 		}
 		
-		private function onComplete(e:Event):void 
-		{
+		private function onComplete(e:Event):void {
 			var xml:XML;
 			
 			try {
@@ -129,14 +173,8 @@ package crowd_framework
 			dispatchComplete();
 		}
 		
-		private function checkForSupporting(soc_type:String):Boolean 
-		{
+		private function checkForSupporting(soc_type:String):Boolean {
 			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type);
-		}
-		
-		private function startAsInRealSocialNetwork():void 
-		{
-			dispatchLog("run as in real social network");
 		}
 		
 		public function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
@@ -168,18 +206,15 @@ package crowd_framework
 			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, message));
 		}
 		
-		public function get debugFilePath():String 
-		{
+		public function get debugFilePath():String {
 			return _debugFilePath;
 		}
 		
-		public function set debugFilePath(value:String):void 
-		{
+		public function set debugFilePath(value:String):void {
 			_debugFilePath = value;
 		}
 		
-		static public function get environment():ICrowdEnvironment 
-		{
+		static public function get environment():ICrowdEnvironment {
 			return _environment;
 		}
 	}

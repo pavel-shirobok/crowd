@@ -12,6 +12,7 @@ package crowd_framework.core.soc_factory
 	{
 		function getEnvironmentInitializer():ICrowdEnvironmentInitializer;
 		function getJSApi():IJSApi;
+		function getJSApiInitParams():*;
 	}
 	
 }

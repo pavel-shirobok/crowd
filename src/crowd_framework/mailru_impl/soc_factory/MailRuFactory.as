@@ -29,6 +29,13 @@ package crowd_framework.mailru_impl.soc_factory
 			return null;
 		}
 		
+		/* INTERFACE crowd_framework.core.soc_factory.ISocialFactory */
+		
+		public function getJSApiInitParams():* 
+		{
+			return null;
+		}
+		
 		public function get soc_type():String 
 		{
 			return SocialTypes.MAILRU;

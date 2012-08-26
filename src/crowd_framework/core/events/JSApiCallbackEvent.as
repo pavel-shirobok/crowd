@@ -21,7 +21,7 @@ package crowd_framework.core.events
 		
 		public override function clone():Event 
 		{ 
-			return new SJSCallbackEvent(type, methodName, params);
+			return new JSApiCallbackEvent(type, methodName, params);
 		} 
 		
 		public override function toString():String 

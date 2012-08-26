@@ -5,6 +5,7 @@ package crowd_framework.vk_impl.soc_factory
 	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.SocialTypes;
 	import crowd_framework.vk_impl.environment.VkontakteEnvironment;
+	import crowd_framework.vk_impl.js_api.VkontakteJSApi;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	
 	/**
@@ -28,7 +29,12 @@ package crowd_framework.vk_impl.soc_factory
 		
 		public function getJSApi():IJSApi 
 		{
-			return null;
+			return new VkontakteJSApi();
+		}
+		
+		public function getJSApiInitParams():* 
+		{
+			return _initData.flash_vars;
 		}
 		
 		public function get soc_type():String 

@@ -1,5 +1,6 @@
 package crowd_framework.core.js_api 
 {
+	import crowd_framework.core.events.JSApiCallbackEvent;
 	import crowd_framework.core.events.JSApiErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -24,7 +25,7 @@ package crowd_framework.core.js_api
 		}
 		
 		protected final function dispatchCallback(callBackName:String, params:Object):void {
-			dispatchEvent(new JSApiErrorEvent(JSApiErrorEvent.CALLBACK, callBackName, params));
+			dispatchEvent(new JSApiCallbackEvent(JSApiCallbackEvent.CALLBACK, callBackName, params));
 		}
 		
 		

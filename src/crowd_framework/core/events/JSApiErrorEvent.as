@@ -22,7 +22,7 @@ package crowd_framework.core.events
 		
 		public override function clone():Event 
 		{ 
-			return new SJSErrorEvent(type, message);
+			return new JSApiErrorEvent(type, message);
 		} 
 		
 		public override function toString():String 
