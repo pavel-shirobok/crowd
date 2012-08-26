@@ -1,29 +1,27 @@
-package crowd_framework.vk_impl.soc_factory 
+package crowd_framework.mailru_impl.soc_factory 
 {
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
 	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.SocialTypes;
-	import crowd_framework.vk_impl.environment.VkontakteEnvironment;
-	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
 	 */
-	public class VKFactory implements ISocialFactory 
+	public class MailRuFactory implements ISocialFactory 
 	{
-		private var _initData:VkontakteInitData;
 		
-		public function VKFactory(initData:VkontakteInitData) 
+		public function MailRuFactory() 
 		{
-			_initData = initData;
 			
 		}
 		
+		/* INTERFACE crowd_framework.core.soc_factory.ISocialFactory */
+		
 		public function getEnvironmentInitializer():ICrowdEnvironmentInitializer 
 		{
-			return new VkontakteEnvironment(_initData);
+			return null;
 		}
 		
 		public function getJSApi():IJSApi 
@@ -33,7 +31,7 @@ package crowd_framework.vk_impl.soc_factory
 		
 		public function get soc_type():String 
 		{
-			return SocialTypes.VKONTAKTE;
+			return SocialTypes.MAILRU;
 		}
 		
 	}

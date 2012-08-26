@@ -1,6 +1,7 @@
 package crowd_framework.core.environment 
 {
 	import crowd_framework.core.ISocialType;
+	import crowd_framework.utils.formatter.IFormatter;
 	
 	/**
 	 * ...
@@ -8,7 +9,13 @@ package crowd_framework.core.environment
 	 */
 	public interface ISocialData extends ISocialType
 	{
+		function get application_id():String;
+		function get user_id():String;
+		function get referrer():String;
+		function get api_url():String;
 		
+		
+		function getLocalData(formatter:IFormatter = null):String;
 	}
 	
 }

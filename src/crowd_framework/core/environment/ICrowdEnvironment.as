@@ -1,6 +1,6 @@
 package crowd_framework.core.environment 
 {
-	import com.ramshteks.utils.IVarsHolder;
+	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
 	

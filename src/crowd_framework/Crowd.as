@@ -2,8 +2,15 @@ package crowd_framework
 {
 	import com.ramshteks.as3.debug.Assert;
 	import com.ramshteks.as3.vars_holder.FlashVarsHolder;
+	import com.ramshteks.as3.vars_holder.XMLVarsHolder;
+	import crowd_framework.core.environment.ICrowdEnvironment;
+	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
+	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;
+	import crowd_framework.mailru_impl.soc_factory.MailRuFactory;
 	import crowd_framework.SocialTypes;
+	import crowd_framework.vk_impl.soc_factory.VKFactory;
+	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.display.Stage;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -18,6 +25,8 @@ package crowd_framework
 	 */
 	public class Crowd extends EventDispatcher
 	{
+		private static var _environment:ICrowdEnvironment;
+		
 		private var _debugFilePath:String = "debug_data.xml";
 		private var _realFlashVars:FlashVarsHolder;
 		private var _alreadyStarted:Boolean = false;
@@ -84,6 +93,11 @@ package crowd_framework
 			}
 			
 			var default_soc_type:String = xml.@default;
+			if (!checkForSupporting(default_soc_type)) {
+				dispatchError("Default social type '" + default_soc_type + "' not supporting. Maybe later? ;)");
+				return;
+			}
+			
 			var xml_socData:XMLList = xml.child(default_soc_type);
 			
 			if (xml_socData.toXMLString().length == 0) {
@@ -91,48 +105,57 @@ package crowd_framework
 				return;
 			}
 			
+			var initData:ICrowdInitData = _initdataHolder[default_soc_type];
+			if (initData == null) {
+				dispatchError("Init data for '" + default_soc_type + "' not defined. Use Crowd#registerSocialInitData method");
+				return;
+			}
 			
+			var socFactory:ISocialFactory = getSocialFactoryByType(default_soc_type, initData);
+			if (socFactory == null) {
+				dispatchError("No social factory for type '" + default_soc_type + "'");
+				return;
+			}
+			
+			dispatchLog("default social type '" + default_soc_type + "'");
+			
+			var envIniter:ICrowdEnvironmentInitializer = socFactory.getEnvironmentInitializer();
+			
+			envIniter.setFlashVarsHolder(new XMLVarsHolder(xml_socData));
+			envIniter.setJSApi(initData.mock_js);
+			
+			_environment = envIniter as ICrowdEnvironment;
 			
 			dispatchComplete();
-			/*var envIniter:ICrowdEnvironmentInitializer = SocialQualifier.getEnvironmentByName(_initData, default_soc);
-			if (envIniter == null) {
-				dispatchError(StringUtils.printf("Unknown social type: %s%", default_soc));
-				return;
-			}*/
-			
-			/*var xml:XML = _loader.xmlData;
-			var default_soc_type:String = xml.@default;
-			var xml_socData:XMLList = xml.child(default_soc_type);
-			
-			
-			
-			if (xml_socData.toXMLString().length == 0) {
-				dispatchError(StringUtils.printf("Default soc_type not found in debug xml. See root attributes 'default'"));
-				return;
-			}
-			
-			/*var envIniter:ICrowdEnvironmentInitializer = SocialQualifier.getEnvironmentByName(_initData, default_soc);
-			if (envIniter == null) {
-				dispatchError(StringUtils.printf("Unknown social type: %s%", default_soc));
-				return;
-			}
-			
-			envIniter.parseVars(new XMLVarsHolder(xml_socData));
-			envIniter.setJSInstance(_initData.mock_js);
-			_environment = envIniter;*/
+		}
+		
+		private function checkForSupporting(soc_type:String):Boolean 
+		{
+			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type);
 		}
 		
 		private function startAsInRealSocialNetwork():void 
 		{
 			dispatchLog("run as in real social network");
-			
 		}
 		
-		//public function getSocialFactory
+		public function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
+			var result:ISocialFactory;
+			switch(soc_type) {
+				case SocialTypes.VKONTAKTE:
+					result = new VKFactory(initData as VkontakteInitData);
+					break;
+				case SocialTypes.MAILRU:
+					result = new MailRuFactory();
+					break;
+			}
+			
+			return result;
+		}
 		
 		private function dispatchLog(...log:Array):void {
 			if (_log_to_trace) {
-				trace(log.join(" "));
+				trace("[crowd log] " + log.join(" "));
 			}
 		}
 		
@@ -153,6 +176,11 @@ package crowd_framework
 		public function set debugFilePath(value:String):void 
 		{
 			_debugFilePath = value;
+		}
+		
+		static public function get environment():ICrowdEnvironment 
+		{
+			return _environment;
 		}
 	}
 
