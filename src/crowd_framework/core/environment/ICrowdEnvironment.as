@@ -3,6 +3,7 @@ package crowd_framework.core.environment
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.core.js_api.IJSApi;
+	import crowd_framework.core.permissions.ISocialPermissions;
 	import crowd_framework.core.request_builder.IRequestBuilder;
 	import crowd_framework.core.rest_api.loaders.IRestApiLoader;
 	
@@ -17,7 +18,7 @@ package crowd_framework.core.environment
 		function get js_api():IJSApi;
 		function get social_data():ISocialData;
 		function get flash_vars():IVarsHolder;
-		
+		function get permissions():ISocialPermissions;
 	}
 	
 }

@@ -5,6 +5,7 @@ package crowd_framework.mailru_impl.soc_factory
 	import crowd_framework.core.rest_api.IRestApiInitializer;
 	import crowd_framework.core.soc_factory.ISocialFactory;
 	import crowd_framework.mailru_impl.environment.MailRuEnvironment;
+	import crowd_framework.mailru_impl.js_api.MailruJSApi;
 	import crowd_framework.mailru_impl.rest_api.MailRuRestApiInitializer;
 	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
 	import crowd_framework.SocialTypes;
@@ -30,15 +31,13 @@ package crowd_framework.mailru_impl.soc_factory
 		
 		public function getJSApi():IJSApi 
 		{
-			return null;
+			return new MailruJSApi();
 		}
 		
 		public function getJSApiInitParams():* 
 		{
-			return null;
+			return ["flash-app", _initData.secret];
 		}
-		
-		/* INTERFACE crowd_framework.core.soc_factory.ISocialFactory */
 		
 		public function getRestApiInitializer():IRestApiInitializer 
 		{

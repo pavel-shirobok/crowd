@@ -4,6 +4,11 @@ package crowd_framework.core.rest_api.loaders
 	import flash.events.IEventDispatcher;
 	import flash.net.URLRequest;
 	
+	[Event(name="securityError", type="flash.events.SecurityErrorEvent")] 
+	[Event(name="ioError", type="flash.events.IOErrorEvent")] 
+	[Event(name="progress", type="flash.events.ProgressEvent")] 
+	[Event(name="complete", type="flash.events.Event")]
+	
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks

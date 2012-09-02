@@ -8,6 +8,7 @@ package crowd_framework.vk_impl.rest_api
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -29,6 +30,12 @@ package crowd_framework.vk_impl.rest_api
 			_loader.addEventListener(Event.COMPLETE, onComplete);
 			_loader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+			_loader.addEventListener(ProgressEvent.PROGRESS, onProgress)
+		}
+		
+		private function onProgress(e:ProgressEvent):void 
+		{
+			dispatchEvent(e);
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 

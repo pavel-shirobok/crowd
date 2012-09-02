@@ -5,6 +5,7 @@ package crowd_framework.mailru_impl.environment
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
 	import crowd_framework.core.environment.ISocialData;
 	import crowd_framework.core.js_api.IJSApi;
+	import crowd_framework.core.permissions.ISocialPermissions;
 	import crowd_framework.core.request_builder.IRequestBuilder;
 	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
 	import crowd_framework.SocialTypes;
@@ -19,7 +20,7 @@ package crowd_framework.mailru_impl.environment
 	 * ...
 	 * @author 
 	 */
-	public class MailRuEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData 
+	public class MailRuEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData , ISocialPermissions
 	{
 		private var _initData:MailRuInitData;
 		
@@ -113,6 +114,25 @@ package crowd_framework.mailru_impl.environment
 		{
 			if (formatter == null) formatter = new XMLFormatter();
 			return formatter.getString([new Param("session_key", _session_key), new Param("sig", _sig), new Param("vid", _user_id)]);
+		}
+		
+		/* INTERFACE crowd_framework.core.permissions.ISocialPermissions */
+		
+		public function checkPermission(permission:String):Boolean 
+		{
+			return false;
+		}
+		
+		/* INTERFACE crowd_framework.core.environment.ICrowdEnvironmentInitializer */
+		
+		public function get permissions():ISocialPermissions 
+		{
+			return this;
+		}
+		
+		public function get allowed():Array 
+		{
+			return [];
 		}
 		
 		public function get request_builder():IRequestBuilder 

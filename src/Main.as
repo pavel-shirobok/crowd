@@ -30,13 +30,15 @@ package
 			var sc:ISocialType;
 			
 			_crowd = new Crowd(true);
-			_crowd.registerSocialInitData(new VkontakteInitData(stage));
-			_crowd.registerSocialInitData(new MailRuInitData("sdfsdf"));
+			
+			_crowd.addInitData(new VkontakteInitData(stage));
+			_crowd.addInitData(new MailRuInitData("sdfsdf"));
+			
 			_crowd.debugFilePath = "debug_data.xml";
+			
 			_crowd.addEventListener(Event.COMPLETE, onCrowdComplete);
 			_crowd.addEventListener(ErrorEvent.ERROR, onCrowdError);
 			_crowd.startCrowd(stage);
-			
 		}
 		
 		private function onCrowdComplete(e:Event):void 

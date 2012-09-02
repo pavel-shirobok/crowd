@@ -1,7 +1,10 @@
 package crowd_framework.mailru_impl.js_api 
 {
+	import com.ramshteks.as3.StringUtils;
+	import crowd_framework.core.events.JSApiCallbackEvent;
 	import crowd_framework.core.js_api.AbstractJSApiDispatcher;
 	import crowd_framework.core.js_api.IJSApi;
+	import crowd_framework.SocialTypes;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -87,11 +90,12 @@ package crowd_framework.mailru_impl.js_api
 				dispatchConnectionError(StringUtils.printf("onApiLoaded: failed to adding callback of %call%", IC_MAILRU_EVENT));
 				return;
 			}
-			dispatchEvent (new SJSEvent(SJSEvent.CONNECT));
+			dispatchSuccessConnect();
 		}
 		
 		private function eventReceiver ( name : String, data : Object ) : void {
-			dispatchEvent(new SJSCallbackEvent (SJSCallbackEvent.CALLBACK, name, data));
+			dispatchCallback(name, data);
+			//dispatchEvent(new JSApiCallbackEvent (JSApiCallbackEvent.CALLBACK, name, data));
 		}
 		
 		public function call(methodName:String, ...args):* 
@@ -104,6 +108,13 @@ package crowd_framework.mailru_impl.js_api
 			}
 			return res;
 		}		
+		
+		/* INTERFACE crowd_framework.core.js_api.IJSApi */
+		
+		public function get soc_type():String 
+		{
+			return SocialTypes.MAILRU;
+		}
 		
 		private function getJSString(method:String):String {
 			var objectName:String = (method.match(/(.*)\.[^.]+$/) || [0, 'window'])[1];

@@ -5,6 +5,7 @@ package crowd_framework.vk_impl.environment
 	import com.adobe.crypto.MD5;
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd_framework.core.environment.ICrowdEnvironmentInitializer;
+	import crowd_framework.core.permissions.ISocialPermissions;
 	import crowd_framework.core.request_builder.IRequestBuilder;
 	import crowd_framework.core.js_api.IJSApi;
 	import crowd_framework.SocialTypes;
@@ -21,7 +22,7 @@ package crowd_framework.vk_impl.environment
 	 * ...
 	 * @author 
 	 */
-	public class VkontakteEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData
+	public class VkontakteEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData, ISocialPermissions
 	{
 		//ISocialData
 		private var _api_url:String;
@@ -93,7 +94,6 @@ package crowd_framework.vk_impl.environment
 		
 		public function get request_builder():IRequestBuilder 
 		{
-			
 			return this as IRequestBuilder;
 		}
 		
@@ -115,7 +115,7 @@ package crowd_framework.vk_impl.environment
 		public function getLocalData(formatter:IFormatter = null):String 
 		{
 			if (formatter == null) formatter = new XMLFormatter();
-			return formatter.getString([new Param("sid", _sid), new Param("secret", _secret), new Param("viewer_id", _user_id)]);
+			return formatter.getString(Param.fromObject({sid:_sid, secret:_secret, viewer_id:_user_id}));
 		}
 		
 		public function getAPIRequest(params:Object):URLRequest 
@@ -136,12 +136,35 @@ package crowd_framework.vk_impl.environment
 		}
 		
 		private function getStandardParams():Array {
-			return [new Param("v", "3.0"), new Param("format", "XML"),new Param("api_id", _application_id)];
+			return Param.fromObject({v:"3.0",format:formatFromInitData(), api_id:_application_id});
+		}
+		
+		private function formatFromInitData():String {
+			return _initData.rest_api_format.toUpperCase();
 		}
 		
 		public function getAuthVariables():URLVariables 
 		{
 			return new URLVariables(StringUtils.printf("uid=%uid%&auth_key=%key%&soc_type=%type%", _user_id, _auth_key, SocialTypes.VKONTAKTE));// "uid=" + _user_id + "&auth_key=" + _auth_key + "&soc_type=" + );
+		}
+		
+		/* INTERFACE crowd_framework.core.permissions.ISocialPermissions */
+		
+		public function checkPermission(permission:String):Boolean 
+		{
+			return false;
+		}
+		
+		/* INTERFACE crowd_framework.core.environment.ICrowdEnvironmentInitializer */
+		
+		public function get permissions():ISocialPermissions 
+		{
+			return this;
+		}
+		
+		public function get allowed():Array 
+		{
+			return [];
 		}
 		
 		public function get flash_vars():IVarsHolder 

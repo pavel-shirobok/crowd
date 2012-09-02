@@ -7,6 +7,7 @@ package crowd_framework.mailru_impl.rest_api
 	import crowd_framework.SocialTypes;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLStream;
 	
@@ -27,6 +28,12 @@ package crowd_framework.mailru_impl.rest_api
 			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus);
 			_loader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+			_loader.addEventListener(ProgressEvent.PROGRESS, onProgress)
+		}
+		
+		private function onProgress(e:ProgressEvent):void 
+		{
+			dispatchEvent(e);
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
