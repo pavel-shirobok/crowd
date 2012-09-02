@@ -187,6 +187,7 @@ package crowd_framework
 			envIniter.setFlashVarsHolder(new XMLVarsHolder(xml_socData));
 			envIniter.setJSApi(initData.mock_js);
 			
+			_soc_type = envIniter.soc_type;
 			_environment = envIniter as ICrowdEnvironment;
 			
 			var rest_api_initializer:IRestApiInitializer = factory.getRestApiInitializer()
