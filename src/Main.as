@@ -29,6 +29,8 @@ package
 			
 			var sc:ISocialType;
 			
+			
+			
 			_crowd = new Crowd(true);
 			
 			_crowd.addInitData(new VkontakteInitData(stage));

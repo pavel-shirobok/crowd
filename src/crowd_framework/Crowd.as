@@ -97,8 +97,8 @@ package crowd_framework
 		private function startAsInRealSocialNetwork():void {
 			dispatchLog("run as in real social network");
 			
+			dispatchLog("initing start logic");
 			var initData:ICrowdInitData = _initdataHolder[_soc_type];
-			
 			var factory:ISocialFactory = getSocialFactoryByType(_soc_type, initData);
 			var env:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
 			
@@ -107,26 +107,29 @@ package crowd_framework
 				return;
 			}
 			
-			_syncronizer = constructSynchronizer(initData);
-			
 			env.setFlashVarsHolder(new FlashVarsHolder(_stage));
 			
-			var js:IJSApi = factory.getJSApi();
+			dispatchLog("initing synchronizer");
+			_syncronizer = constructSynchronizer(initData);
 			
-			js.addEventListener(Event.CONNECT, onJSConnect);
-			js.addEventListener(JSApiErrorEvent.CONNECT_FAILED, onJSConnectFailed);
-			
-			_environment = env;
-			
-			env.setJSApi(js);
-			
-			js.init(factory.getJSApiInitParams());
-			
+			dispatchLog("initing rest api");
 			var rest_api_initializer:IRestApiInitializer = factory.getRestApiInitializer()
 			rest_api_initializer.setEnvironment(_environment);
 			rest_api_initializer.setSynchronizer(_syncronizer);
+
+			dispatchLog("initing js api");
+			var js:IJSApi = factory.getJSApi();
+			js.addEventListener(Event.CONNECT, onJSConnect);
+			js.addEventListener(JSApiErrorEvent.CONNECT_FAILED, onJSConnectFailed);
+			env.setJSApi(js);
+			_environment = env;
 			
-			dispatchLog("start initialize js");
+			var jsMessage:String = "connecting js to environment";
+			if (_environment.soc_type == SocialTypes.MAILRU) {
+				jsMessage += "Note: If initing stops on this step, it may mean, that it is not installed System.allowDomain";
+			}
+			dispatchLog(jsMessage);
+			js.init(factory.getJSApiInitParams());
 		}
 		
 		private function onJSConnectFailed(e:JSApiErrorEvent):void {
@@ -134,6 +137,7 @@ package crowd_framework
 		}
 		
 		private function onJSConnect(e:Event):void {
+			dispatchLog("Init complete: Crowd ready to rock!");
 			dispatchComplete();
 		}
 		
@@ -189,6 +193,7 @@ package crowd_framework
 			rest_api_initializer.setEnvironment(_environment);
 			rest_api_initializer.setSynchronizer(_syncronizer);
 			
+			dispatchLog("Init complete: Crowd ready to rock!");
 			dispatchComplete();
 		}
 		
