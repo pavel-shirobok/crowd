@@ -1,4 +1,4 @@
-package crowd_framework.core.rest_api.syncronizer 
+package crowd_framework.core.rest_api.synchronizer 
 {
 	import crowd_framework.core.rest_api.IRestApi;
 	import crowd_framework.core.rest_api.loaders.IRestApiLoader;

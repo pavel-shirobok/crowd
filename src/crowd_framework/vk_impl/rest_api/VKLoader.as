@@ -3,8 +3,9 @@ package crowd_framework.vk_impl.rest_api
 	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.IRestApiErrorReport;
 	import crowd_framework.core.rest_api.loaders.AbstractRestApiLoader;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd_framework.SocialTypes;
+	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
@@ -20,9 +21,9 @@ package crowd_framework.vk_impl.rest_api
 		private var _loader:URLLoader;
 		private var _xmlData:XML;
 		
-		public function VKLoader(synchronizer:RestApiSynchronizer) 
+		public function VKLoader(synchronizer:RestApiSynchronizer, initData:VkontakteInitData) 
 		{
-			super(SocialTypes.VKONTAKTE, synchronizer);
+			super(synchronizer, initData);
 			
 			_loader = new URLLoader();
 			_loader.addEventListener(Event.COMPLETE, onComplete);
@@ -32,12 +33,12 @@ package crowd_framework.vk_impl.rest_api
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
 		{
-			dispatchSystemError(SystemErrorEvent.DETAIL_SECURITY_ERROR);
+			dispatchEvent(e);
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
-			dispatchSystemError(SystemErrorEvent.DETAIL_IO_ERROR);
+			dispatchEvent(e);
 		}
 		
 		private function onComplete(e:Event):void 

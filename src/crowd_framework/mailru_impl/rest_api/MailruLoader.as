@@ -2,7 +2,8 @@ package crowd_framework.mailru_impl.rest_api
 {
 	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.loaders.AbstractRestApiLoader;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
+	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
 	import crowd_framework.SocialTypes;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
@@ -18,9 +19,9 @@ package crowd_framework.mailru_impl.rest_api
 		private var _loader:URLStream;
 		private var _data:String = "";
 		
-		public function MailruLoader(synchronizer:RestApiSynchronizer) 
+		public function MailruLoader(synchronizer:RestApiSynchronizer, initData:MailRuInitData) 
 		{
-			super(SocialTypes.MAILRU, synchronizer);
+			super(synchronizer, initData);
 			
 			_loader = new URLStream();
 			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus);
@@ -30,7 +31,8 @@ package crowd_framework.mailru_impl.rest_api
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
 		{
-			dispatchSystemError(SystemErrorEvent.DETAIL_SECURITY_ERROR);
+			dispatchEvent(e);
+			//dispatchSystemError(SystemErrorEvent.DETAIL_SECURITY_ERROR);
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
@@ -49,7 +51,7 @@ package crowd_framework.mailru_impl.rest_api
 				var apiError:MailRuRestApiErrorReport = new MailRuRestApiErrorReport(getData());
 				dispatchApiError(apiError)
 			}catch (e:Error) {
-				dispatchSystemError(SystemErrorEvent.DETAIL_IO_ERROR);
+				dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR));
 			}
 		}
 		

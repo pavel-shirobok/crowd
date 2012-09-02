@@ -3,10 +3,12 @@ package crowd_framework.core.rest_api.loaders
 	import crowd_framework.core.events.RestApiErrorEvent;
 	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.IRestApiErrorReport;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
+	import crowd_framework.core.soc_init_data.ICrowdInitData;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
+	
 	/**
 	 * ...
 	 * @author Shirobok Pavel (ramshteks@gmail.com)
@@ -16,18 +18,16 @@ package crowd_framework.core.rest_api.loaders
 		private var _soc_type:String;
 		private var _synchronizer:RestApiSynchronizer;
 		private var _req:URLRequest;
+		private var _initData:ICrowdInitData;
 		
-		public function AbstractRestApiLoader(soc_type:String, synchronizer:RestApiSynchronizer):void {
+		public function AbstractRestApiLoader(synchronizer:RestApiSynchronizer, initData:ICrowdInitData):void {
+			_initData = initData;
 			_synchronizer = synchronizer;
-			_soc_type = soc_type;
+			_soc_type = initData.soc_type;
 		}
 		
 		protected function dispatchComplete():void {
 			dispatchEvent(new Event(Event.COMPLETE));
-		}
-		
-		protected function dispatchSystemError(detail:String):void {
-			dispatchEvent(new SystemErrorEvent(detail))
 		}
 		
 		protected function dispatchApiError(apiError:IRestApiErrorReport):void {

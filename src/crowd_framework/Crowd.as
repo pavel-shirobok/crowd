@@ -9,7 +9,7 @@ package crowd_framework
 	import crowd_framework.core.js_api.*;
 	import crowd_framework.core.rest_api.IRestApi;
 	import crowd_framework.core.rest_api.IRestApiInitializer;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd_framework.core.soc_factory.*;
 	import crowd_framework.core.soc_init_data.*;
 	import crowd_framework.mailru_impl.soc_factory.*;
@@ -36,8 +36,8 @@ package crowd_framework
 		private var _initdataHolder:Array = [];
 		private var _loader:URLLoader;
 		private var _stage:Stage;
-		private var _soc_type:String = '';
-		private var _debug_mode:Boolean = false;
+		private static var _soc_type:String = '';
+		private static var _debug_mode:Boolean = false;
 		
 		public function Crowd(log_to_trace:Boolean = true) {
 			_log_to_trace = log_to_trace;
@@ -187,7 +187,7 @@ package crowd_framework
 			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type);
 		}
 		
-		public function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
+		private function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
 			var result:ISocialFactory;
 			switch(soc_type) {
 				case SocialTypes.VKONTAKTE:
@@ -236,6 +236,16 @@ package crowd_framework
 		static public function get rest_api():IRestApi 
 		{
 			return _rest_api;
+		}
+		
+		public static function get isDebugMode():Boolean 
+		{
+			return _debug_mode;
+		}
+		
+		static public function get soc_type():String 
+		{
+			return _soc_type;
 		}
 	}
 

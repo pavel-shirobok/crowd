@@ -43,7 +43,7 @@ package crowd_framework.vk_impl.soc_factory
 		
 		public function getRestApiInitializer():IRestApiInitializer 
 		{
-			return new VKRestApiInitializer();
+			return new VKRestApiInitializer(_initData);
 		}
 		
 		public function get soc_type():String 

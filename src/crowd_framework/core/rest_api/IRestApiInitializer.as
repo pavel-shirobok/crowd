@@ -1,7 +1,7 @@
 package crowd_framework.core.rest_api 
 {
 	import crowd_framework.core.environment.ICrowdEnvironment;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
 	
 	/**
 	 * ...

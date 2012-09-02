@@ -42,7 +42,7 @@ package crowd_framework.mailru_impl.soc_factory
 		
 		public function getRestApiInitializer():IRestApiInitializer 
 		{
-			return new MailRuRestApiInitializer();
+			return new MailRuRestApiInitializer(_initData);
 		}
 		
 		public function get soc_type():String 

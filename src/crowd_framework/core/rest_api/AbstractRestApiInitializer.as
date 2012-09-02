@@ -2,7 +2,8 @@ package crowd_framework.core.rest_api
 {
 	import crowd_framework.core.rest_api.loaders.IRestApiLoader;
 	import crowd_framework.core.environment.ICrowdEnvironment;
-	import crowd_framework.core.rest_api.syncronizer.RestApiSynchronizer;
+	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
+	import crowd_framework.core.soc_init_data.ICrowdInitData;
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
@@ -11,8 +12,11 @@ package crowd_framework.core.rest_api
 	{
 		private var _synchronizer:RestApiSynchronizer;
 		private var _environment:ICrowdEnvironment;
+		private var _initData:ICrowdInitData;
 		
-		public function AbstractRestApiInitializer(){}
+		public function AbstractRestApiInitializer(initData:ICrowdInitData){
+			_initData = initData;
+		}
 		
 		public function setSynchronizer(sync:RestApiSynchronizer):void 
 		{
@@ -42,6 +46,11 @@ package crowd_framework.core.rest_api
 		protected function get environment():ICrowdEnvironment 
 		{
 			return _environment;
+		}
+		
+		protected function get initData():ICrowdInitData 
+		{
+			return _initData;
 		}
 		
 	}
