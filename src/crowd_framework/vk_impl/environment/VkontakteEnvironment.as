@@ -13,7 +13,9 @@ package crowd_framework.vk_impl.environment
 	import crowd_framework.utils.formatter.XMLFormatter;
 	import crowd_framework.utils.NetUtil;
 	import crowd_framework.utils.Param;
+	import crowd_framework.vk_impl.permissions.VKPermissions;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
+	import flash.errors.IllegalOperationError;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
@@ -41,6 +43,8 @@ package crowd_framework.vk_impl.environment
 		
 		//JS API
 		private var _javaScript:IJSApi;
+		
+		private var _permissionsMap:Array = initPermissionsMap();
 		
 		public function VkontakteEnvironment(initData:VkontakteInitData) 
 		{
@@ -148,24 +152,65 @@ package crowd_framework.vk_impl.environment
 			return new URLVariables(StringUtils.printf("uid=%uid%&auth_key=%key%&soc_type=%type%", _user_id, _auth_key, SocialTypes.VKONTAKTE));// "uid=" + _user_id + "&auth_key=" + _auth_key + "&soc_type=" + );
 		}
 		
-		/* INTERFACE crowd_framework.core.permissions.ISocialPermissions */
+		////////////////////////////////////////////////////////////////
+		//{ Permissions
+		////////////////////////////////////////////////////////////////
 		
-		public function checkPermission(permission:String):Boolean 
+		public function check(...permissions:Array):Boolean 
 		{
-			return false;
-		}
-		
-		/* INTERFACE crowd_framework.core.environment.ICrowdEnvironmentInitializer */
-		
-		public function get permissions():ISocialPermissions 
-		{
-			return this;
+			var permissions_flag_string:String = flash_vars.getVar("api_settings");
+			var flag:int = parseInt(permissions_flag_string);
+			
+			var result:Boolean = true;
+			
+			for each(var perm_req:String in permissions) {
+				var req_flag:int = _permissionsMap.indexOf(perm_req);
+				if (req_flag == -1) throw new IllegalOperationError("Unknow permission flag '" + perm_req + "'");
+				
+				if (flag & req_flag == 0) {
+					result = false;
+					break;
+				}
+			}
+			
+			return result;
 		}
 		
 		public function get allowed():Array 
 		{
 			return [];
 		}
+		
+		public function get permissions():ISocialPermissions 
+		{
+			return this;
+		}
+		
+		private function initPermissionsMap():Array {
+			var map:Array = [];
+			
+			map[0x000001] = VKPermissions.NOTICE;
+			map[0x000002] = VKPermissions.FRIENDS;
+			map[0x000004] = VKPermissions.PHOTO;
+			map[0x000008] = VKPermissions.AUDIO;
+			map[0x000010] = VKPermissions.VIDEO;
+			map[0x000020] = VKPermissions.OFFER;
+			map[0x000040] = VKPermissions.QUESTIONS;
+			map[0x000080] = VKPermissions.WIKI;
+			map[0x000100] = VKPermissions.ADDING_LINK_TO_LEFT_MENU;
+			map[0x000200] = VKPermissions.ADDING_LINK_TO_USERS_WALLS;
+			map[0x000400] = VKPermissions.USER_STATUSES;
+			map[0x000800] = VKPermissions.NOTE;
+			map[0x002000] = VKPermissions.EXTENDED_WALLS_METHODS;
+			map[0x008000] = VKPermissions.ADVERT_CABINET;
+			map[0x020000] = VKPermissions.DOCUMENT;
+			map[0x040000] = VKPermissions.GROUPS;
+			map[0x080000] = VKPermissions.ANSWER_NOTICE;
+			map[0x100000] = VKPermissions.STATISTICS;
+			
+			return map;
+		}
+		//}
 		
 		public function get flash_vars():IVarsHolder 
 		{

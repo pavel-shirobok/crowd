@@ -4,6 +4,7 @@ package
 	import crowd_framework.core.ISocialType;
 	import crowd_framework.Crowd;
 	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
+	import crowd_framework.vk_impl.permissions.VKPermissions;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.display.Sprite;
 	import flash.events.ErrorEvent;
@@ -28,8 +29,6 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			var sc:ISocialType;
-			
-			
 			
 			_crowd = new Crowd(true);
 			

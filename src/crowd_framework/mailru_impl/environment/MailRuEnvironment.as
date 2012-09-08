@@ -116,14 +116,10 @@ package crowd_framework.mailru_impl.environment
 			return formatter.getString([new Param("session_key", _session_key), new Param("sig", _sig), new Param("vid", _user_id)]);
 		}
 		
-		/* INTERFACE crowd_framework.core.permissions.ISocialPermissions */
-		
-		public function checkPermission(permission:String):Boolean 
+		public function check(...permissions:Array):Boolean 
 		{
 			return false;
 		}
-		
-		/* INTERFACE crowd_framework.core.environment.ICrowdEnvironmentInitializer */
 		
 		public function get permissions():ISocialPermissions 
 		{

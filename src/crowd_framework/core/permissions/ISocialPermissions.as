@@ -7,7 +7,7 @@ package crowd_framework.core.permissions
 	 */
 	public interface ISocialPermissions 
 	{
-		function checkPermission(permission:String):Boolean;
+		function check(...permissions:Array):Boolean;
 		function get allowed():Array;
 	}
 }
