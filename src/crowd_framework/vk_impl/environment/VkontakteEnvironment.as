@@ -179,6 +179,7 @@ package crowd_framework.vk_impl.environment
 		{
 			var flag:int = getPermissionFlags();
 			var allowed:Array = [];
+			
 			for (var flag_in_map:String in _permissionsMap) {
 				var str_flag:String = _permissionsMap[flag_in_map];
 				var flag_in_map_int:int = int(parseInt(flag_in_map));

@@ -72,6 +72,11 @@ package crowd_framework.vk_impl.rest_api
 			dispatchComplete();
 		}
 		
+		override public function get data():* 
+		{
+			return _loader.data;
+		}
+		
 		private function checkForApiError(xml:XML):IRestApiErrorReport {
 			if (String(xml.error_code) != "") {
 				//TODO return new VkontakteApiError(xml);

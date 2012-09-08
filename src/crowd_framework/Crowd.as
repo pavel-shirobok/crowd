@@ -194,6 +194,8 @@ package crowd_framework
 			rest_api_initializer.setEnvironment(_environment);
 			rest_api_initializer.setSynchronizer(_syncronizer);
 			
+			_rest_api = rest_api_initializer;
+			
 			dispatchLog("Init complete: Crowd ready to rock!");
 			dispatchComplete();
 		}
