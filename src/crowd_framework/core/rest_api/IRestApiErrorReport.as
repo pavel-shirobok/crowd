@@ -11,6 +11,8 @@ package crowd_framework.core.rest_api
 		function get message():String;
 		
 		function get params():Array;
+		
+		function toString():String;
 	}
 	
 }

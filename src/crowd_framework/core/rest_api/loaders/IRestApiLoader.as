@@ -8,6 +8,7 @@ package crowd_framework.core.rest_api.loaders
 	[Event(name="ioError", type="flash.events.IOErrorEvent")] 
 	[Event(name="progress", type="flash.events.ProgressEvent")] 
 	[Event(name="complete", type="flash.events.Event")]
+	[Event(name="APIErrorEvent-API_ERROR", type="crowd_framework.core.events.RestApiErrorEvent")]
 	
 	/**
 	 * ...
@@ -16,6 +17,7 @@ package crowd_framework.core.rest_api.loaders
 	public interface IRestApiLoader extends IEventDispatcher, ISocialType
 	{
 		function load(req:URLRequest):void;
+		function get request():URLRequest;
 		function get data():*;
 	}
 	

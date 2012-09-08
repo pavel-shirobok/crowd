@@ -20,6 +20,13 @@ package crowd_framework.mailru_impl.rest_api
 			_message = String(xml.error_msg);
 			_params = new Array();*/
 		}
+		
+		/* INTERFACE crowd_framework.core.rest_api.IRestApiErrorReport */
+		
+		public function toString():String 
+		{
+			throw new Error("No implementation yet")
+		}
 
 		public function get code():int 
 		{

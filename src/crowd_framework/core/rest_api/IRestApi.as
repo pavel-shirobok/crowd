@@ -9,6 +9,7 @@ package crowd_framework.core.rest_api
 	public interface IRestApi extends ISocialType
 	{
 		function getLoader():IRestApiLoader;
+		function get defaultFormat():String;
 	}
 
 }

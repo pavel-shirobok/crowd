@@ -63,7 +63,7 @@ package crowd_framework.core.rest_api.loaders
 			return _soc_type;
 		}
 		
-		protected function get request():URLRequest 
+		public function get request():URLRequest 
 		{
 			return _req;
 		}

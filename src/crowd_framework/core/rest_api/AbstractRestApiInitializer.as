@@ -33,6 +33,13 @@ package crowd_framework.core.rest_api
 			throw new Error("need to implement")
 		}
 		
+		/* INTERFACE crowd_framework.core.rest_api.IRestApiInitializer */
+		
+		public function get defaultFormat():String 
+		{
+			return _initData.rest_api_format;
+		}
+		
 		public function get soc_type():String 
 		{
 			throw new Error("need to implement")
