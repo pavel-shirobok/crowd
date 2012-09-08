@@ -24,6 +24,7 @@ package crowd_framework.utils
 			}
 			
 			array.sort();
+			
 			return MD5.hash(user_id+array.join("")+secret);
 		}
 		

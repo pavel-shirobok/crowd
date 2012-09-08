@@ -124,9 +124,6 @@ package crowd_framework.vk_impl.environment
 		
 		public function getAPIRequest(params:Object):URLRequest 
 		{
-			
-			var req:URLRequest = NetUtil.getPostURLRequest(_api_url);
-			
 			var n_params:Object = getStandardParams();// .concat(Param.fromObject(params));
 			
 			for (var key:String in params) {
@@ -141,6 +138,7 @@ package crowd_framework.vk_impl.environment
 			
 			Param.copyObjectToUrlVariables(n_params, req_vars);
 			
+			var req:URLRequest = NetUtil.getPostURLRequest(_api_url);
 			req.data = req_vars;
 
 			return req;
