@@ -158,8 +158,7 @@ package crowd_framework.vk_impl.environment
 		
 		public function check(...permissions:Array):Boolean 
 		{
-			var permissions_flag_string:String = flash_vars.getVar("api_settings");
-			var flag:int = parseInt(permissions_flag_string);
+			var flag:int = getPermissionFlags();
 			
 			var result:Boolean = true;
 			
@@ -167,7 +166,7 @@ package crowd_framework.vk_impl.environment
 				var req_flag:int = _permissionsMap.indexOf(perm_req);
 				if (req_flag == -1) throw new IllegalOperationError("Unknow permission flag '" + perm_req + "'");
 				
-				if (flag & req_flag == 0) {
+				if ((flag & req_flag) == 0) {
 					result = false;
 					break;
 				}
@@ -178,12 +177,28 @@ package crowd_framework.vk_impl.environment
 		
 		public function get allowed():Array 
 		{
-			return [];
+			var flag:int = getPermissionFlags();
+			var allowed:Array = [];
+			for (var flag_in_map:String in _permissionsMap) {
+				var str_flag:String = _permissionsMap[flag_in_map];
+				var flag_in_map_int:int = int(parseInt(flag_in_map));
+				if ((flag & flag_in_map_int) != 0) {
+					allowed.push(str_flag);
+				}
+			}
+			
+			return allowed;
 		}
 		
 		public function get permissions():ISocialPermissions 
 		{
 			return this;
+		}
+		
+		private function getPermissionFlags():int 
+		{
+			var permissions_flag_string:String = flash_vars.getVar("api_settings");
+			return parseInt(permissions_flag_string);
 		}
 		
 		private function initPermissionsMap():Array {

@@ -45,7 +45,7 @@ package
 		private function onCrowdComplete(e:Event):void 
 		{
 			trace(e);
-			
+			trace()
 			/*trace("rewuest builder", Crowd.environment.request_builder);
 			trace("js_api", Crowd.environment.js_api);
 			trace("flash_vars", Crowd.environment.flash_vars);
