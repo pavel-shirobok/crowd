@@ -127,20 +127,27 @@ package crowd_framework.vk_impl.environment
 			
 			var req:URLRequest = NetUtil.getPostURLRequest(_api_url);
 			
-			var n_params:Array = getStandardParams().concat(Param.fromObject(params));
+			var n_params:Object = getStandardParams();// .concat(Param.fromObject(params));
+			
+			for (var key:String in params) {
+				n_params[key] = params[key];
+			}
 			
 			var sig:String = NetUtil.getSignature(n_params, _user_id, _secret);
 			
-			n_params.push(new Param("sig", sig));
-			n_params.push(new Param("sid", _sid));
+			n_params["sig"] = sig;
+			n_params["sid"] = _sid;
+			var req_vars:URLVariables = new URLVariables();
 			
-			req.data = new URLVariables(n_params.join("&"));
+			Param.copyObjectToUrlVariables(n_params, req_vars);
 			
+			req.data = req_vars;
+
 			return req;
 		}
 		
-		private function getStandardParams():Array {
-			return Param.fromObject({v:"3.0",format:formatFromInitData(), api_id:_application_id});
+		private function getStandardParams():Object {
+			return {v:"3.0",format:formatFromInitData(), api_id:_application_id};
 		}
 		
 		private function formatFromInitData():String {

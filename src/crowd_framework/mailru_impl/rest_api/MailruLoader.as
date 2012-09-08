@@ -1,6 +1,5 @@
 package crowd_framework.mailru_impl.rest_api 
 {
-	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.loaders.AbstractRestApiLoader;
 	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
@@ -55,8 +54,8 @@ package crowd_framework.mailru_impl.rest_api
 			}
 			
 			try {
-				var apiError:MailRuRestApiErrorReport = new MailRuRestApiErrorReport(getData());
-				dispatchApiError(apiError)
+				//var apiError:MailRuRestApiErrorReport = new MailRuRestApiErrorReport(getData());
+				//dispatchApiError(apiError)
 			}catch (e:Error) {
 				dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR));
 			}

@@ -1,7 +1,6 @@
 package crowd_framework.core.rest_api.loaders 
 {
 	import crowd_framework.core.events.RestApiErrorEvent;
-	import crowd_framework.core.events.SystemErrorEvent;
 	import crowd_framework.core.rest_api.IRestApiErrorReport;
 	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd_framework.core.soc_init_data.ICrowdInitData;

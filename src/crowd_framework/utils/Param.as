@@ -1,5 +1,6 @@
 package crowd_framework.utils 
 {
+	import flash.net.URLVariables;
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
@@ -14,6 +15,12 @@ package crowd_framework.utils
 			var res:Array = new Array();
 			for (var k:String in src) res.push(fromRaw(k, src[k]));
 			return res;
+		}
+		
+		public static function copyObjectToUrlVariables(src:Object, dest:URLVariables):void {
+			for (var key:String in src) {
+				dest[key] = src[key];
+			}
 		}
 		
 		private var _param_name:String;

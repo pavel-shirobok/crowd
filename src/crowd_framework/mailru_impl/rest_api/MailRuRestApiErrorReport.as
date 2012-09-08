@@ -11,6 +11,9 @@ package crowd_framework.mailru_impl.rest_api
 		private var _code:int;
 		private var _message:String;
 		private var _params:Array;
+		private var _format;
+		private var _rawErrorString;
+		private var _soc_type;
 		
 		public function MailRuRestApiErrorReport(error_answer:String) 
 		{
@@ -26,6 +29,23 @@ package crowd_framework.mailru_impl.rest_api
 		public function toString():String 
 		{
 			throw new Error("No implementation yet")
+		}
+		
+		/* INTERFACE crowd_framework.core.rest_api.IRestApiErrorReport */
+		
+		public function get format():String 
+		{
+			return _format;
+		}
+		
+		public function get rawErrorString():String 
+		{
+			return _rawErrorString;
+		}
+		
+		public function get soc_type():String 
+		{
+			return _soc_type;
 		}
 
 		public function get code():int 

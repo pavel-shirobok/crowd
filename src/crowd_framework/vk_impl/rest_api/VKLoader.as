@@ -1,9 +1,11 @@
 package crowd_framework.vk_impl.rest_api 
 {
-	import crowd_framework.core.events.SystemErrorEvent;
+	import com.adobe.serialization.json.JSON;
 	import crowd_framework.core.rest_api.IRestApiErrorReport;
 	import crowd_framework.core.rest_api.loaders.AbstractRestApiLoader;
+	import crowd_framework.core.rest_api.loaders.RestApiErrorReport;
 	import crowd_framework.core.rest_api.synchronizer.RestApiSynchronizer;
+	import crowd_framework.RestApiFormat;
 	import crowd_framework.SocialTypes;
 	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.events.Event;
@@ -12,6 +14,7 @@ package crowd_framework.vk_impl.rest_api
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
 	
 	/**
 	 * ...
@@ -33,6 +36,11 @@ package crowd_framework.vk_impl.rest_api
 			_loader.addEventListener(ProgressEvent.PROGRESS, onProgress)
 		}
 		
+		override protected function realLoad(req:URLRequest):void 
+		{
+			_loader.load(req);
+		}
+		
 		private function onProgress(e:ProgressEvent):void 
 		{
 			dispatchEvent(e);
@@ -50,25 +58,30 @@ package crowd_framework.vk_impl.rest_api
 		
 		private function onComplete(e:Event):void 
 		{
-			//TODO make this complete
-			/*var xml:XML = XMLChecker.getXML(_loader.data);
+			var request_data:URLVariables = request.data as URLVariables;
+			var format:String = request_data["format"];
+			format = format.toLowerCase();
 			
-			try {
-				xml = new XML(_loader.data)
+			var json:Object;
+			var xml:XML;
+			
+			switch(format) {
+				case RestApiFormat.JSON_FORMAT:
+					trace(typeof(_loader.data), _loader.data)
+					json = JSON.decode(String(_loader.data), false);
+					break;
+					
+				case RestApiFormat.XML_FORMAT:
+					xml = new XML(_loader.data);
+					break;
 			}
 			
-			if (xml == null) {
-				dispatchSystemError(SystemErrorEvent.DETAIL_INVALID_DATA_FORMAT);
-				return;
-			}
-			
-			var apiError:ApiError = checkForApiError(xml);
+			var apiError:IRestApiErrorReport = getApiErrorReportIfErrorWas(xml!=null?xml:json, format);
 			if (apiError != null) {
 				dispatchApiError(apiError);
 				return;
 			}
 			
-			_xmlData = xml;*/
 			dispatchComplete();
 		}
 		
@@ -77,16 +90,53 @@ package crowd_framework.vk_impl.rest_api
 			return _loader.data;
 		}
 		
-		private function checkForApiError(xml:XML):IRestApiErrorReport {
-			if (String(xml.error_code) != "") {
-				//TODO return new VkontakteApiError(xml);
+		private function getApiErrorReportIfErrorWas(data:*, format:String):IRestApiErrorReport {
+			var json:Object = data;
+			var xml:XML = data as XML;
+			
+			switch(format) {
+				case RestApiFormat.XML_FORMAT:
+					if ("" != String(xml.error_code)) {
+						return parseAsXML(xml);
+					}
+					break;
+					
+				case RestApiFormat.JSON_FORMAT:
+					return parseAsJson(json);
+					break;
 			}
+			
 			return null;
 		}
 		
-		override protected function realLoad(req:URLRequest):void 
+		private function parseAsJson(json:Object):IRestApiErrorReport 
 		{
-			_loader.load(req);
+			var result:IRestApiErrorReport;
+			var code:int = int(json.error.error_code);
+			var message:String = String(json.error.error_msg);
+			
+			result = new RestApiErrorReport(soc_type, RestApiFormat.JSON_FORMAT, JSON.encode(json), code, message);
+			
+			for each(var p:* in json.error.request_params) {
+				result.params[String(p.key)] = String(p.value);
+			}
+			
+			return result;
+		}
+		
+		private function parseAsXML(xml:XML):IRestApiErrorReport 
+		{
+			var result:IRestApiErrorReport;
+			var code:int = int(xml.error_code);
+			var message:String = String(xml.error_msg);
+			
+			result = new RestApiErrorReport(soc_type, RestApiFormat.XML_FORMAT, xml.toXMLString(), code, message);
+			
+			for each(var p:XML in xml.request_params.*) {
+				result.params[String(p.key)] = String(p.value);
+			}
+			
+			return result;
 		}
 	}
 

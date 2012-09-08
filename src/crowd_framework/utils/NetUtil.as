@@ -15,10 +15,16 @@ package crowd_framework.utils
 			return req;
 		}
 		
-		public static function getSignature(params:Array,user_id:String, secret:String):String 
+		public static function getSignature(params_obj:Object, user_id:String, secret:String):String 
 		{
-			params.sort();
-			return MD5.hash(user_id+params.join("")+secret);
+			var array:Array = new Array();
+			
+			for (var key:String in params_obj) {
+				array.push(key + "=" + params_obj[key]);
+			}
+			
+			array.sort();
+			return MD5.hash(user_id+array.join("")+secret);
 		}
 		
 	}
