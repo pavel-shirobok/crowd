@@ -118,7 +118,18 @@ package crowd_framework.mailru_impl.environment
 		
 		public function check(...permissions:Array):Boolean 
 		{
-			return false;
+			var soc_permissions:Array = getPermissions();
+			
+			for each(var perm:String in permissions) {
+				if (soc_permissions.indexOf(perm) == -1) return false;
+			}
+			
+			return true;
+		}
+		
+		private function getPermissions():Array 
+		{
+			return flash_vars.getVar("ext_perm").split(",");
 		}
 		
 		public function get permissions():ISocialPermissions 
@@ -128,7 +139,7 @@ package crowd_framework.mailru_impl.environment
 		
 		public function get allowed():Array 
 		{
-			return [];
+			return getPermissions();
 		}
 		
 		public function get request_builder():IRequestBuilder 
