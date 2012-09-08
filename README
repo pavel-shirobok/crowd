@@ -1,0 +1,6 @@
+Crowd-framework 0.1
+* Vkontakte, MM, OK - combined social framework
+* Serialize & deserialize free
+* Loaders synchronization
+* Debug-standalone mode for comfort developing
+* Uniform interaction with all social-networking
