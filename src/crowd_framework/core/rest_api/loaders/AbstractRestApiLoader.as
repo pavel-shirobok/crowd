@@ -38,7 +38,6 @@ package crowd_framework.core.rest_api.loaders
 			_req = req;
 			addEventListener(Event.SELECT, onSelectLoader)
 			_synchronizer.putInQueue(this);
-			realLoad(req);
 		}
 		
 		protected function onSelectLoader(e:Event):void 
