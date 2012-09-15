@@ -102,7 +102,9 @@ package crowd_framework.vk_impl.rest_api
 					break;
 					
 				case RestApiFormat.JSON_FORMAT:
-					return parseAsJson(json);
+					if (json["error"]!=null){
+						return parseAsJson(json);
+					}
 					break;
 			}
 			
