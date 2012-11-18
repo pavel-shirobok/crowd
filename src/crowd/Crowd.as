@@ -107,7 +107,7 @@ package crowd
 				return;
 			}
 			
-			env.setFlashVarsHolder(new FlashVarsHolder(_stage));
+			env.setFlashVarsHolder(cleanVars(factory.soc_type, _realFlashVars));
 			
 			dispatchLog("initing synchronizer");
 			_syncronizer = constructSynchronizer(initData);
@@ -182,9 +182,11 @@ package crowd
 			
 			dispatchLog("default social type '" + default_soc_type + "'");
 			_syncronizer = constructSynchronizer(initData);
-			var envIniter:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
 			
-			envIniter.setFlashVarsHolder(new XMLVarsHolder(xml_socData));
+			var varsHolder:IVarsHolder = cleanVars(factory.soc_type, new XMLVarsHolder(xml_socData));
+			
+			var envIniter:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
+			envIniter.setFlashVarsHolder(varsHolder);
 			envIniter.setJSApi(initData.mock_js);
 			
 			_soc_type = envIniter.soc_type;
@@ -210,12 +212,32 @@ package crowd
 				case SocialTypes.VKONTAKTE:
 					result = new VKFactory(initData as VkontakteInitData);
 					break;
+				/*${MAIL_RU_ACTIVED}
 				case SocialTypes.MAILRU:
 					result = new MailRuFactory(initData as MailRuInitData);
-					break;
+					break;//*/
 			}
 			
 			return result;
+		}
+		
+		private function cleanVars(soc_type:String, varsHolder:IVarsHolder):IVarsHolder {
+			/*${INSTALL_LICENSE}
+			var overridable:OverridableVarHolder = new OverridableVarHolder(varsHolder);
+			
+			switch(soc_type) {
+				case SocialTypes.VKONTAKTE:
+					overridable.overrideVar("api_id", "${VK_APP_IP}");
+					break;
+				case SocialTypes.MAILRU:
+					overridable.overrideVar("oid", "${MM_APP_ID}");
+					break;
+			}
+			
+			varsHolder = overridable
+			//*/
+			
+			return varsHolder;
 		}
 		
 		private function dispatchLog(...log:Array):void {

@@ -2,9 +2,9 @@ package
 {
 	import crowd.core.ISocialType;
 	import crowd.Crowd;
-	import crowd.mailru_impl.soc_init_data.MailRuInitData;
+	/*import crowd.mailru_impl.soc_init_data.MailRuInitData;
 	import crowd.vk_impl.permissions.VKPermissions;
-	import crowd.vk_impl.soc_init_data.VkontakteInitData;
+	import crowd.vk_impl.soc_init_data.VkontakteInitData;*/
 	import flash.display.Sprite;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -31,8 +31,8 @@ package
 			
 			_crowd = new Crowd(true);
 			
-			_crowd.addInitData(new VkontakteInitData(stage));
-			_crowd.addInitData(new MailRuInitData("sdfsdf"));
+			//_crowd.addInitData(new VkontakteInitData(stage));
+			//_crowd.addInitData(new MailRuInitData("sdfsdf"));
 			
 			_crowd.debugFilePath = "debug_data.xml";
 			
