@@ -1,11 +1,10 @@
 package 
 {
-	import com.adobe.utils.ArrayUtil;
-	import crowd_framework.core.ISocialType;
-	import crowd_framework.Crowd;
-	import crowd_framework.mailru_impl.soc_init_data.MailRuInitData;
-	import crowd_framework.vk_impl.permissions.VKPermissions;
-	import crowd_framework.vk_impl.soc_init_data.VkontakteInitData;
+	import crowd.core.ISocialType;
+	import crowd.Crowd;
+	import crowd.mailru_impl.soc_init_data.MailRuInitData;
+	import crowd.vk_impl.permissions.VKPermissions;
+	import crowd.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.display.Sprite;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
