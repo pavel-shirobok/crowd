@@ -111,7 +111,7 @@ package crowd.ok_impl.environment
 		
 		public function get js_api():IJSApi 
 		{
-			return null;
+			return _js_api;
 		}
 		
 		public function get social_data():ISocialData 

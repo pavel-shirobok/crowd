@@ -103,7 +103,7 @@ package crowd
 			
 			dispatchLog("initing start logic");
 			var initData:ICrowdInitData = _initdataHolder[_soc_type];
-			var factory:ISocialFactory = getSocialFactoryByType(_soc_type, initData);
+			var factory:ISocialFactory = getSocialFactoryByType(_soc_type, initData, _realFlashVars);
 			var env:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
 			
 			if (env == null) {
@@ -178,7 +178,9 @@ package crowd
 				return;
 			}
 			
-			var factory:ISocialFactory = getSocialFactoryByType(default_soc_type, initData);
+			var varsHolder:IVarsHolder = cleanVars(default_soc_type, new XMLVarsHolder(xml_socData));
+			
+			var factory:ISocialFactory = getSocialFactoryByType(default_soc_type, initData, varsHolder);
 			if (factory == null) {
 				dispatchError("No social factory for type '" + default_soc_type + "'");
 				return;
@@ -187,7 +189,7 @@ package crowd
 			dispatchLog("default social type '" + default_soc_type + "'");
 			_syncronizer = constructSynchronizer(initData);
 			
-			var varsHolder:IVarsHolder = cleanVars(factory.soc_type, new XMLVarsHolder(xml_socData));
+			
 			
 			var envIniter:ICrowdEnvironmentInitializer = factory.getEnvironmentInitializer();
 			envIniter.setFlashVarsHolder(varsHolder);
@@ -210,7 +212,7 @@ package crowd
 			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type) || (SocialTypes.ODNOKLASSNIKI == soc_type);
 		}
 		
-		private function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
+		private function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData, flash_vars:IVarsHolder):ISocialFactory {
 			var result:ISocialFactory;
 			
 			switch(soc_type) {
@@ -224,7 +226,7 @@ package crowd
 				
 				/*@OK_ACTIVE@*/
 				case SocialTypes.ODNOKLASSNIKI:
-					return new OKFactory(initData as OdnoklassnikiInitData);
+					return new OKFactory(initData as OdnoklassnikiInitData, flash_vars);
 					break;//*/
 			}
 			

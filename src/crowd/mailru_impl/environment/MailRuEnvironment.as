@@ -62,7 +62,7 @@ package crowd.mailru_impl.environment
 		
 		public function getAPIRequest(params:Object):URLRequest 
 		{
-			var n_params:Object = getStandardParams();// .concat(Param.fromObject(params));
+			var n_params:Object = getStandardParams();
 			
 			for (var key:String in params) {
 				n_params[key] = params[key];

@@ -1,13 +1,9 @@
 package crowd.mailru_impl.js_api
 {
 	import com.ramshteks.as3.StringUtils;
-	import crowd.core.events.JSApiCallbackEvent;
 	import crowd.core.js_api.AbstractJSApiDispatcher;
 	import crowd.core.js_api.IJSApi;
 	import crowd.SocialTypes;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
 	import flash.external.ExternalInterface;
 	
 	/**
@@ -107,8 +103,6 @@ package crowd.mailru_impl.js_api
 			}
 			return res;
 		}		
-		
-		/* INTERFACE crowd.core.js_api.IJSApi */
 		
 		public function get soc_type():String 
 		{

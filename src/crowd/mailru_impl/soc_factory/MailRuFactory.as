@@ -1,7 +1,7 @@
 package crowd.mailru_impl.soc_factory
 {
-	import crowd.core.js_api.IJSApi;
 	import crowd.core.environment.ICrowdEnvironmentInitializer;
+	import crowd.core.js_api.IJSApi;
 	import crowd.core.rest_api.IRestApiInitializer;
 	import crowd.core.soc_factory.ISocialFactory;
 	import crowd.mailru_impl.environment.MailRuEnvironment;
@@ -21,7 +21,6 @@ package crowd.mailru_impl.soc_factory
 		public function MailRuFactory(initData:MailRuInitData) 
 		{
 			_initData = initData;
-			
 		}
 		
 		public function getEnvironmentInitializer():ICrowdEnvironmentInitializer 

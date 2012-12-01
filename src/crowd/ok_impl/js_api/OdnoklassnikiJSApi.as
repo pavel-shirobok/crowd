@@ -25,9 +25,9 @@ package crowd.ok_impl.js_api
 			//super();
 		}
 		
-		public function init(...flash_vars):void 
+		public function init(...apiconnection_id):void 
 		{
-			var var_name:String = "apiconnection";
+			/*var var_name:String = "apiconnection";
 			if (flash_vars[0] == null) {
 				dispatchConnectionError("incorrect arguments: flash vars object equals null");
 				return;
@@ -36,13 +36,14 @@ package crowd.ok_impl.js_api
 			if (fl_vars[var_name] == undefined) {
 				dispatchConnectionError("incorrect arguments: _connection name specified as 'undefined'");
 				return;
-			}
+			}*/
 			
-			_connectionName = fl_vars[var_name];
+			_connectionName = apiconnection_id[0];//fl_vars[var_name];
 
 			try{
 				_lc = new LocalConnection();
 				_lc.allowDomain("*");
+				_lc.allowInsecureDomain("*");
 				_lc.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecError);
 				_lc.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
 				_lc.addEventListener(StatusEvent.STATUS, onStatus);
@@ -92,7 +93,6 @@ package crowd.ok_impl.js_api
 		}
 		
 		private function callback(callbackName:String, methodName:String, result:String, params:String):void {
-			//Alert.show("cb:"+callbackName+params.toString());
 			dispatchCallback(callbackName, params);
 		}
 		

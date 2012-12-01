@@ -1,5 +1,6 @@
 package crowd.ok_impl.soc_factory 
 {
+	import com.ramshteks.as3.vars_holder.IVarsHolder;
 	import crowd.core.environment.ICrowdEnvironmentInitializer;
 	import crowd.core.js_api.IJSApi;
 	import crowd.core.rest_api.IRestApiInitializer;
@@ -16,9 +17,11 @@ package crowd.ok_impl.soc_factory
 	public class OKFactory implements ISocialFactory 
 	{
 		private var _initData:OdnoklassnikiInitData;
+		private var _flash_vars:IVarsHolder;
 		
-		public function OKFactory(initData:OdnoklassnikiInitData) 
+		public function OKFactory(initData:OdnoklassnikiInitData, flash_vars:IVarsHolder) 
 		{
+			_flash_vars = flash_vars;
 			_initData = initData;
 		}
 		
@@ -34,7 +37,7 @@ package crowd.ok_impl.soc_factory
 		
 		public function getJSApiInitParams():* 
 		{
-			return null;
+			return [_flash_vars.getVar("apiconnection")];
 		}
 		
 		public function getRestApiInitializer():IRestApiInitializer 

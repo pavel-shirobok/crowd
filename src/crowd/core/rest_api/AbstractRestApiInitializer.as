@@ -1,7 +1,7 @@
 package crowd.core.rest_api
 {
-	import crowd.core.rest_api.loaders.IRestApiLoader;
 	import crowd.core.environment.ICrowdEnvironment;
+	import crowd.core.rest_api.loaders.IRestApiLoader;
 	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd.core.soc_init_data.ICrowdInitData;
 	/**
@@ -32,8 +32,6 @@ package crowd.core.rest_api
 		{
 			throw new Error("need to implement")
 		}
-		
-		/* INTERFACE crowd.core.rest_api.IRestApiInitializer */
 		
 		public function get defaultFormat():String 
 		{
