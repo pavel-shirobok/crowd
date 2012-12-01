@@ -95,7 +95,6 @@ package crowd.mailru_impl.js_api
 		
 		private function eventReceiver ( name : String, data : Object ) : void {
 			dispatchCallback(name, data);
-			//dispatchEvent(new JSApiCallbackEvent (JSApiCallbackEvent.CALLBACK, name, data));
 		}
 		
 		public function call(methodName:String, ...args):* 

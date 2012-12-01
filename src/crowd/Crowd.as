@@ -14,6 +14,8 @@ package crowd
 	import crowd.core.soc_init_data.*;
 	import crowd.mailru_impl.soc_factory.*;
 	import crowd.mailru_impl.soc_init_data.*;
+	import crowd.ok_impl.soc_factory.OKFactory;
+	import crowd.ok_impl.soc_init_data.OdnoklassnikiInitData;
 	import crowd.vk_impl.soc_factory.*;
 	import crowd.vk_impl.soc_init_data.*;
 	import flash.display.*;
@@ -205,11 +207,12 @@ package crowd
 		}
 		
 		private function checkForSupporting(soc_type:String):Boolean {
-			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type);
+			return (soc_type == SocialTypes.MAILRU) || (SocialTypes.VKONTAKTE == soc_type) || (SocialTypes.ODNOKLASSNIKI == soc_type);
 		}
 		
 		private function getSocialFactoryByType(soc_type:String, initData:ICrowdInitData):ISocialFactory {
 			var result:ISocialFactory;
+			
 			switch(soc_type) {
 				case SocialTypes.VKONTAKTE:
 					result = new VKFactory(initData as VkontakteInitData);
@@ -217,6 +220,11 @@ package crowd
 				/*@MAIL_RU_ACTIVED@*/
 				case SocialTypes.MAILRU:
 					result = new MailRuFactory(initData as MailRuInitData);
+					break;//*/
+				
+				/*@OK_ACTIVE@*/
+				case SocialTypes.ODNOKLASSNIKI:
+					return new OKFactory(initData as OdnoklassnikiInitData);
 					break;//*/
 			}
 			
