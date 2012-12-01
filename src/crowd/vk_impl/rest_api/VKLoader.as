@@ -6,7 +6,6 @@ package crowd.vk_impl.rest_api
 	import crowd.core.rest_api.loaders.RestApiErrorReport;
 	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd.RestApiFormat;
-	import crowd.SocialTypes;
 	import crowd.vk_impl.soc_init_data.VkontakteInitData;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -24,6 +23,9 @@ package crowd.vk_impl.rest_api
 	{
 		private var _loader:URLLoader;
 		private var _xmlData:XML;
+		
+		//XML or JSON
+		private var _result:*;
 		
 		public function VKLoader(synchronizer:RestApiSynchronizer, initData:VkontakteInitData) 
 		{
@@ -67,12 +69,13 @@ package crowd.vk_impl.rest_api
 			
 			switch(format) {
 				case RestApiFormat.JSON_FORMAT:
-					trace(typeof(_loader.data), _loader.data)
 					json = JSON.decode(String(_loader.data), false);
+					_result = json;
 					break;
 					
 				case RestApiFormat.XML_FORMAT:
 					xml = new XML(_loader.data);
+					_result = xml;
 					break;
 			}
 			
@@ -87,7 +90,7 @@ package crowd.vk_impl.rest_api
 		
 		override public function get data():* 
 		{
-			return _loader.data;
+			return _result;
 		}
 		
 		private function getApiErrorReportIfErrorWas(data:*, format:String):IRestApiErrorReport {

@@ -22,7 +22,7 @@ package crowd
 	//}
 	
 	//{events - metatags
-	[Event(name = "complete", type = "flash.events.Event"     )]
+	[Event(name = "complete", type = "flash.events.Event")]
 	[Event(name = "error"   , type = "flash.events.ErrorEvent")]
 	[Event(name = "log_message", type="crowd.core.events.LogEvent")]
 	//}
@@ -31,7 +31,9 @@ package crowd
 	 * Crowd - class  of the classes in over the world and all time since current moment
 	 * @author Shirobok Pavel aka ramshteks
 	 */
-	public class Crowd extends EventDispatcher{
+	public class Crowd extends EventDispatcher {
+		public static const Owner:String = "@Owner@";
+		
 		//{statics
 		private static var _environment:ICrowdEnvironment;
 		private static var _syncronizer:RestApiSynchronizer;
@@ -212,7 +214,7 @@ package crowd
 				case SocialTypes.VKONTAKTE:
 					result = new VKFactory(initData as VkontakteInitData);
 					break;
-				/*${MAIL_RU_ACTIVED}
+				/*@MAIL_RU_ACTIVED@*/
 				case SocialTypes.MAILRU:
 					result = new MailRuFactory(initData as MailRuInitData);
 					break;//*/
@@ -222,19 +224,21 @@ package crowd
 		}
 		
 		private function cleanVars(soc_type:String, varsHolder:IVarsHolder):IVarsHolder {
-			/*${INSTALL_LICENSE}
+			/*@INSTALL_LICENSE@
 			var overridable:OverridableVarHolder = new OverridableVarHolder(varsHolder);
 			
 			switch(soc_type) {
 				case SocialTypes.VKONTAKTE:
-					overridable.overrideVar("api_id", "${VK_APP_IP}");
+					overridable.overrideVar("api_id", "@VK_APP_IP@");
 					break;
 				case SocialTypes.MAILRU:
-					overridable.overrideVar("oid", "${MM_APP_ID}");
+					overridable.overrideVar("app_id", "@MM_APP_ID@");
 					break;
+				default:
+					throw new Error("Unknown soc_type = '"+soc_type+"'");
 			}
 			
-			varsHolder = overridable
+			varsHolder = overridable;
 			//*/
 			
 			return varsHolder;

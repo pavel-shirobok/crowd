@@ -62,21 +62,33 @@ package crowd.mailru_impl.environment
 		
 		public function getAPIRequest(params:Object):URLRequest 
 		{
+			var n_params:Object = getStandardParams();// .concat(Param.fromObject(params));
+			
+			for (var key:String in params) {
+				n_params[key] = params[key];
+			}
+			
+			var sig:String = NetUtil.getSignature(n_params, _user_id, _initData.secret);
+			
+			n_params["sig"] = sig;
+			
+			var req_vars:URLVariables = new URLVariables();
+			
+			Param.copyObjectToUrlVariables(n_params, req_vars);
+			
 			var req:URLRequest = NetUtil.getPostURLRequest(_api_url);
-			
-			var n_params:Array = getStandardParams().concat(Param.fromObject(params));
-			
-			var sig:String = NetUtil.getSignature(n_params,_user_id, _initData.secret);
-			
-			n_params.push(new Param("sig", sig));
-			
-			req.data = new URLVariables(n_params.join("&"));
+			req.data = req_vars;
+
 			return req;
 		}
 		
-		private function getStandardParams():Array 
+		private function getStandardParams():Object 
 		{
-			return [new Param("format", "xml"),new Param("app_id", _application_id), new Param("session_key", _session_key)];
+			return { app_id:"_application_id", format:formatFromInitData(), session_key:_session_key };
+		}
+		
+		private function formatFromInitData():String {
+			return _initData.rest_api_format.toUpperCase();
 		}
 		
 		public function getAuthVariables():URLVariables 

@@ -31,7 +31,7 @@ package
 			
 			_crowd = new Crowd(true);
 			
-			//_crowd.addInitData(new VkontakteInitData(stage));
+			_crowd.addInitData(new VkontakteInitData(stage));
 			//_crowd.addInitData(new MailRuInitData("sdfsdf"));
 			
 			_crowd.debugFilePath = "debug_data.xml";

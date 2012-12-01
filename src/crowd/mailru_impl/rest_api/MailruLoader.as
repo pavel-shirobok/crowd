@@ -1,14 +1,19 @@
 package crowd.mailru_impl.rest_api
 {
+	import com.adobe.serialization.json.JSON;
+	import crowd.core.rest_api.IRestApiErrorReport;
 	import crowd.core.rest_api.loaders.AbstractRestApiLoader;
+	import crowd.core.rest_api.loaders.RestApiErrorReport;
 	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
 	import crowd.mailru_impl.soc_init_data.MailRuInitData;
-	import crowd.SocialTypes;
+	import crowd.RestApiFormat;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.net.URLRequest;
 	import flash.net.URLStream;
+	import flash.net.URLVariables;
 	
 	/**
 	 * ...
@@ -18,6 +23,9 @@ package crowd.mailru_impl.rest_api
 	{
 		private var _loader:URLStream;
 		private var _data:String = "";
+		
+		//XML OR JSON
+		private var _result:*;
 		
 		public function MailruLoader(synchronizer:RestApiSynchronizer, initData:MailRuInitData) 
 		{
@@ -30,6 +38,11 @@ package crowd.mailru_impl.rest_api
 			_loader.addEventListener(ProgressEvent.PROGRESS, onProgress)
 		}
 		
+		override protected function realLoad(req:URLRequest):void 
+		{
+			_loader.load(req);
+		}
+		
 		private function onProgress(e:ProgressEvent):void 
 		{
 			dispatchEvent(e);
@@ -38,7 +51,6 @@ package crowd.mailru_impl.rest_api
 		private function onSecurityError(e:SecurityErrorEvent):void 
 		{
 			dispatchEvent(e);
-			//dispatchSystemError(SystemErrorEvent.DETAIL_SECURITY_ERROR);
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
@@ -48,54 +60,104 @@ package crowd.mailru_impl.rest_api
 		
 		private function onHttpStatus(e:HTTPStatusEvent):void 
 		{
-			if (e.status == 200) {
-				onComplete();
-				return;
-			}
-			
-			try {
-				//var apiError:MailRuRestApiErrorReport = new MailRuRestApiErrorReport(getData());
-				//dispatchApiError(apiError)
-			}catch (e:Error) {
-				dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR));
-			}
+			onComplete();
 		}
 		
 		private function onComplete():void 
 		{
-			/*var data:String = getData();
-			var xml:XML = XMLChecker.getXML(data);
+			var request_data:URLVariables = request.data as URLVariables;
+			var format:String = request_data["format"];
+			format = format.toLowerCase();
 			
-			if (xml == null) {
-				dispatchSystemError(SystemErrorEvent.DETAIL_INVALID_DATA_FORMAT);
+			var data:String = getData();
+			var error:IRestApiErrorReport = getApiErrorReportIfErrorWas(data, format);
+			
+			if (error != null) {
+				dispatchApiError(error);
+				return;
+			}
+
+			var json:Object;
+			var xml:XML;
+			
+			switch(format) {
+				case RestApiFormat.JSON_FORMAT:
+					json = JSON.decode(data, true);
+					_result = json;
+					break;
+					
+				case RestApiFormat.XML_FORMAT:
+					xml = new XML(data);
+					_result = xml;
+					break;
 			}
 			
-			_xmlData = xml;*/
 			dispatchComplete();
 		}
+		
+		private function getApiErrorReportIfErrorWas(result:*, format:String):IRestApiErrorReport 
+		{
+			//при определенных условиях, вне зависимости от переданных параметрах на скрипт mail.ru
+			//возвращает ошибку в json, поэтому приходится сначала пробовать в json, а если не вышло в xml
+			var json:Object
+			try{
+				json = JSON.decode(result);
+			
+				if (json["error"]!=null){
+					return parseAsJson(json, format);
+				}
+			}catch (error:Error) {
+				var xml:XML = new XML(result);
+				if ("" != String(xml.error_code)) {
+					return parseAsXML(xml);
+				}
+			}
+			
+			return null;
+		}
+		
+		private function parseAsJson(json:Object, format:String):IRestApiErrorReport 
+		{
+			var result:IRestApiErrorReport;
+			var code:int = int(json.error.error_code);
+			var message:String = String(json.error.error_msg);
+			
+			result = new RestApiErrorReport(soc_type, format, JSON.encode(json), code, message);
+			
+			for each(var p:* in json.error.request_params) {
+				result.params[String(p.key)] = String(p.value);
+			}
+			
+			return result;
+		}
+		
+		private function parseAsXML(xml:XML):IRestApiErrorReport 
+		{
+			var result:IRestApiErrorReport;
+			var code:int = int(xml.error_code);
+			var message:String = String(xml.error_msg);
+			
+			result = new RestApiErrorReport(soc_type, RestApiFormat.XML_FORMAT, xml.toXMLString(), code, message);
+			
+			for each(var p:XML in xml.request_params.*) {
+				result.params[String(p.key)] = String(p.value);
+			}
+			
+			return result;
+		}
+		
 		private function getData():String {
 			if (_data == "") {
 				_data = _loader.readMultiByte(_loader.bytesAvailable, "utf8");
 			}
 			return _data;
 		}
-		/*
 		
-		
-		public function load(req:URLRequest):void 
+		override public function get data():* 
 		{
-			_loader.load(req);
+			return _result;
 		}
 		
-		public function get xmlData():XML 
-		{
-			return _xmlData;
-		}
-		
-		public function get type():String {
-			return SocialTypes.MAILRU;
-		}
-		*/
 	}
 
 }
