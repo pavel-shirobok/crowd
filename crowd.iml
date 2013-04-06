@@ -3,10 +3,14 @@
   <component name="FlexBuildConfigurationManager" active="crowd">
     <configurations>
       <configuration name="crowd" output-file="crowd.swf" output-folder="$MODULE_DIR$/out/production/crowd">
-        <dependencies target-player="10">
-          <sdk name="flex3.6" />
+        <dependencies target-player="10.0" component-set="MxOnly">
+          <sdk name="flex4.5.1" />
         </dependencies>
-        <compiler-options />
+        <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="false" />
+          </map>
+        </compiler-options>
         <packaging-air-desktop />
         <packaging-android />
         <packaging-ios />
@@ -19,6 +23,9 @@
     <content url="file://$MODULE_DIR$/../as3bicycle-lib">
       <sourceFolder url="file://$MODULE_DIR$/../as3bicycle-lib/src" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../as3corelib">
+      <sourceFolder url="file://$MODULE_DIR$/../as3corelib/src" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../as3utils-lib">
       <sourceFolder url="file://$MODULE_DIR$/../as3utils-lib/src" isTestSource="false" />
     </content>
@@ -28,8 +35,9 @@
     <content url="file://$MODULE_DIR$/../../mydocs/work/flash/flashDevelop/ramshteks">
       <sourceFolder url="file://$MODULE_DIR$/../../mydocs/work/flash/flashDevelop/ramshteks/com" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="flex3.6" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="flex4.5.1" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="src" level="project" />
   </component>
 </module>
 

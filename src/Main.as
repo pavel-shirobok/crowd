@@ -2,9 +2,8 @@ package
 {
 	import crowd.core.ISocialType;
 	import crowd.Crowd;
-	/*import crowd.mailru_impl.soc_init_data.MailRuInitData;
-	import crowd.vk_impl.permissions.VKPermissions;
-	import crowd.vk_impl.soc_init_data.VkontakteInitData;*/
+	import crowd.impl.vkontakte.VkontakteInitData;
+
 	import flash.display.Sprite;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
