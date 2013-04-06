@@ -1,4 +1,4 @@
-package crowd.core.permissions
+package crowd.core
 {
 	
 	/**

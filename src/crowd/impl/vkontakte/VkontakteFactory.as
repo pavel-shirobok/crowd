@@ -1,9 +1,9 @@
 package crowd.impl.vkontakte
 {
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.rest_api.IRestApiInitializer;
-	import crowd.core.soc_factory.ISocialFactory;
+	import crowd.core.IJSApi;
+	import crowd.core.ICrowdEnvironmentInitializer;
+	import crowd.core.IRestApiInitializer;
+	import crowd.core.ISocialFactory;
 	import crowd.SocialTypes;
 	import crowd.impl.vkontakte.VkontakteEnvironment;
 	import crowd.impl.vkontakte.VkontakteJSApi;

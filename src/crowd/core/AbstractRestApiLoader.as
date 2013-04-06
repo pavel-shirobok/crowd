@@ -1,13 +1,11 @@
-package crowd.core.rest_api.loaders
+package crowd.core
 {
-	import crowd.core.events.RestApiErrorEvent;
-	import crowd.core.rest_api.IRestApiErrorReport;
-	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
-	import crowd.core.soc_init_data.ICrowdInitData;
+	import crowd.events.RestApiErrorEvent;
+
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
-	
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel (ramshteks@gmail.com)

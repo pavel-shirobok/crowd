@@ -1,4 +1,4 @@
-package crowd.core.rest_api.loaders
+package crowd.core
 {
 	import crowd.core.ISocialType;
 	import flash.events.IEventDispatcher;
@@ -8,7 +8,7 @@ package crowd.core.rest_api.loaders
 	[Event(name="ioError", type="flash.events.IOErrorEvent")] 
 	[Event(name="progress", type="flash.events.ProgressEvent")] 
 	[Event(name="complete", type="flash.events.Event")]
-	[Event(name="APIErrorEvent-API_ERROR", type="crowd.core.events.RestApiErrorEvent")]
+	[Event(name="APIErrorEvent-API_ERROR", type="crowd.events.RestApiErrorEvent")]
 	
 	/**
 	 * ...

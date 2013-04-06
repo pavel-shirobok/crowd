@@ -1,4 +1,4 @@
-package crowd.core.js_api
+package crowd.core
 {
 	import crowd.core.ISocialType;
 	import flash.events.IEventDispatcher;

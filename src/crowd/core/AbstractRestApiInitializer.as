@@ -1,9 +1,10 @@
-package crowd.core.rest_api
+package crowd.core
 {
-	import crowd.core.environment.ICrowdEnvironment;
-	import crowd.core.rest_api.loaders.IRestApiLoader;
-	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
-	import crowd.core.soc_init_data.ICrowdInitData;
+	import crowd.core.rest_api.*;
+	import crowd.core.ICrowdEnvironment;
+	import crowd.core.IRestApiLoader;
+	import crowd.core.RestApiSynchronizer;
+	import crowd.core.ICrowdInitData;
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks

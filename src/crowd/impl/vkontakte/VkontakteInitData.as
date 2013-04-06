@@ -1,9 +1,9 @@
 package crowd.impl.vkontakte
 {
 	import crowd.core.ISocialType;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.js_api.MockJS;
-	import crowd.core.soc_init_data.ICrowdInitData;
+	import crowd.core.IJSApi;
+	import crowd.core.MockJS;
+	import crowd.core.ICrowdInitData;
 	import crowd.RestApiFormat;
 	import crowd.SocialTypes;
 	import flash.display.Stage;

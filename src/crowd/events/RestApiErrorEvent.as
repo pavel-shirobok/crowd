@@ -1,7 +1,7 @@
-package crowd.core.events
+package crowd.events
 {
 
-	import crowd.core.rest_api.IRestApiErrorReport;
+	import crowd.core.IRestApiErrorReport;
 	import flash.events.Event;
 	
 	/**

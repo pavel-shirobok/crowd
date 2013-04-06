@@ -1,4 +1,4 @@
-package crowd.core.environment
+package crowd.core
 {
 	import crowd.core.ISocialType;
 	import crowd.utils.formatter.IFormatter;

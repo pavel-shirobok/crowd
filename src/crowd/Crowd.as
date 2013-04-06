@@ -5,19 +5,11 @@ package crowd
 	import com.ramshteks.as3.debug.*;
 	import com.ramshteks.as3.vars_holder.*;
 
-	import crowd.core.environment.*;
-	import crowd.core.events.*;
-	import crowd.core.js_api.*;
-	import crowd.core.rest_api.*;
-	import crowd.core.rest_api.synchronizer.*;
-	import crowd.core.soc_factory.*;
-	import crowd.core.soc_init_data.*;
-	import crowd.impl.mailru.MailruFactory;
-	import crowd.impl.mailru.MailruInitData;
-	import crowd.impl.odnoklassniki.OdnoklassnikiFactory;
-	import crowd.impl.odnoklassniki.OdnoklassnikiInitData;
-	import crowd.impl.vkontakte.VkontakteFactory;
-	import crowd.impl.vkontakte.VkontakteInitData;
+	import crowd.core.*;
+	import crowd.events.*;
+	import crowd.impl.mailru.*;
+	import crowd.impl.odnoklassniki.*;
+	import crowd.impl.vkontakte.*;
 
 	import flash.display.*;
 	import flash.events.*;
@@ -28,14 +20,14 @@ package crowd
 	//{events - meta tags
 	[Event(name = "complete", type = "flash.events.Event")]
 	[Event(name = "error"   , type = "flash.events.ErrorEvent")]
-	[Event(name = "log_message", type="crowd.core.events.LogEvent")]
+	[Event(name = "log_message", type="crowd.events.LogEvent")]
 	//}
 	
 	/**
 	 * Crowd - class  of the classes in over the world and all time since current moment
 	 * @author Shirobok Pavel aka ramshteks
 	 */
-	public class Crowd extends EventDispatcher {
+	public final class Crowd extends EventDispatcher {
 		//noinspection JSUnusedGlobalSymbols
 		/**
 		 * Версия сборки

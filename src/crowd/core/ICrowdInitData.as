@@ -1,8 +1,8 @@
-package crowd.core.soc_init_data
+package crowd.core
 {
-	import crowd.core.environment.ISocialData;
+	import crowd.core.ISocialData;
 	import crowd.core.ISocialType;
-	import crowd.core.js_api.IJSApi;
+	import crowd.core.IJSApi;
 	import flash.display.Stage;
 	
 	/**

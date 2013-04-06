@@ -1,6 +1,6 @@
-package crowd.core.rest_api.loaders
+package crowd.core
 {
-	import crowd.core.rest_api.IRestApiErrorReport;
+	import crowd.core.IRestApiErrorReport;
 	
 	/**
 	 * ...

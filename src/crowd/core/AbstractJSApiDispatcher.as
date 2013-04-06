@@ -1,7 +1,7 @@
-package crowd.core.js_api
+package crowd.core
 {
-	import crowd.core.events.JSApiCallbackEvent;
-	import crowd.core.events.JSApiErrorEvent;
+	import crowd.events.JSApiCallbackEvent;
+	import crowd.events.JSApiErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	

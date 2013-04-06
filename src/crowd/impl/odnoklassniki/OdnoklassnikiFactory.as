@@ -1,10 +1,10 @@
 package crowd.impl.odnoklassniki
 {
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.rest_api.IRestApiInitializer;
-	import crowd.core.soc_factory.ISocialFactory;
+	import crowd.core.ICrowdEnvironmentInitializer;
+	import crowd.core.IJSApi;
+	import crowd.core.IRestApiInitializer;
+	import crowd.core.ISocialFactory;
 	import crowd.impl.odnoklassniki.OdnoklassnikiEnvironment;
 	import crowd.impl.odnoklassniki.OdnoklassnikiJSApi;
 	import crowd.impl.odnoklassniki.OdnoklassnikiRestApiInitializer;

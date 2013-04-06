@@ -1,4 +1,4 @@
-package crowd.core.request_builder
+package crowd.core
 {
 	import crowd.core.ISocialType;
 	import flash.net.URLRequest;

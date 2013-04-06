@@ -1,6 +1,6 @@
 package crowd.impl.mailru
 {
-	import crowd.core.rest_api.IRestApiErrorReport;
+	import crowd.core.IRestApiErrorReport;
 	
 	/**
 	 * ...

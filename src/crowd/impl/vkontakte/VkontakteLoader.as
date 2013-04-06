@@ -1,10 +1,10 @@
 package crowd.impl.vkontakte
 {
 	import com.adobe.serialization.json.JSON;
-	import crowd.core.rest_api.IRestApiErrorReport;
-	import crowd.core.rest_api.loaders.AbstractRestApiLoader;
-	import crowd.core.rest_api.loaders.RestApiErrorReport;
-	import crowd.core.rest_api.synchronizer.RestApiSynchronizer;
+	import crowd.core.IRestApiErrorReport;
+	import crowd.core.AbstractRestApiLoader;
+	import crowd.core.RestApiErrorReport;
+	import crowd.core.RestApiSynchronizer;
 	import crowd.RestApiFormat;
 	import crowd.impl.vkontakte.VkontakteInitData;
 	import flash.events.Event;

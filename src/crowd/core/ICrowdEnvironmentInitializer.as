@@ -1,7 +1,7 @@
-package crowd.core.environment
+package crowd.core
 {
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import crowd.core.js_api.IJSApi;
+	import crowd.core.IJSApi;
 	
 	/**
 	 * ...

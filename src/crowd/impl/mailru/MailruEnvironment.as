@@ -2,20 +2,21 @@ package crowd.impl.mailru
 {
 	import com.ramshteks.as3.StringUtils;
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.environment.ISocialData;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.permissions.ISocialPermissions;
-	import crowd.core.request_builder.IRequestBuilder;
-	import crowd.impl.mailru.MailruInitData;
+
 	import crowd.SocialTypes;
-	import crowd.utils.formatter.IFormatter;
-	import crowd.utils.formatter.XMLFormatter;
+	import crowd.core.ICrowdEnvironmentInitializer;
+	import crowd.core.IJSApi;
+	import crowd.core.IRequestBuilder;
+	import crowd.core.ISocialData;
+	import crowd.core.ISocialPermissions;
 	import crowd.utils.NetUtil;
 	import crowd.utils.Param;
+	import crowd.utils.formatter.IFormatter;
+	import crowd.utils.formatter.XMLFormatter;
+
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
-	
+
 	/**
 	 * ...
 	 * @author 

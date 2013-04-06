@@ -1,4 +1,4 @@
-package crowd.core.rest_api
+package crowd.core
 {
 	import crowd.core.ISocialType;
 	

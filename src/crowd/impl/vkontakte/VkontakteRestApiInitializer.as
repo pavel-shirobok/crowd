@@ -1,7 +1,7 @@
 package crowd.impl.vkontakte
 {
-	import crowd.core.rest_api.AbstractRestApiInitializer;
-	import crowd.core.rest_api.loaders.IRestApiLoader;
+	import crowd.core.AbstractRestApiInitializer;
+	import crowd.core.IRestApiLoader;
 	import crowd.SocialTypes;
 	import crowd.impl.vkontakte.VkontakteInitData;
 	

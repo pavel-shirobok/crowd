@@ -1,9 +1,10 @@
-package crowd.core.rest_api.synchronizer
+package crowd.core
 {
-	import crowd.core.rest_api.IRestApi;
-	import crowd.core.rest_api.loaders.IRestApiLoader;
+	import crowd.core.IRestApiLoader;
+
 	import flash.events.Event;
 	import flash.utils.setInterval;
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
@@ -11,10 +12,9 @@ package crowd.core.rest_api.synchronizer
 	public class RestApiSynchronizer 
 	{
 		private var _stack:Vector.<IRestApiLoader> = new Vector.<IRestApiLoader>();
-		private var _checkInterval:int;
 		public function RestApiSynchronizer(delay:int = 333) 
 		{
-			_checkInterval = setInterval(checkQueue, delay);
+			setInterval(checkQueue, delay);
 		}
 		
 		private function checkQueue():void 
@@ -24,8 +24,9 @@ package crowd.core.rest_api.synchronizer
 			var loader:IRestApiLoader = _stack.shift();
 			startLoader(loader);
 		}
-		
-		private function startLoader(loader:IRestApiLoader):void 
+
+		//noinspection JSMethodCanBeStatic
+		private function startLoader(loader:IRestApiLoader):void
 		{
 			loader.dispatchEvent(new Event(Event.SELECT));
 		}

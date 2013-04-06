@@ -1,8 +1,8 @@
 package crowd.impl.mailru
 {
 	import com.ramshteks.as3.StringUtils;
-	import crowd.core.js_api.AbstractJSApiDispatcher;
-	import crowd.core.js_api.IJSApi;
+	import crowd.core.AbstractJSApiDispatcher;
+	import crowd.core.IJSApi;
 	import crowd.SocialTypes;
 	import flash.external.ExternalInterface;
 	

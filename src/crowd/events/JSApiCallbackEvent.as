@@ -1,4 +1,4 @@
-package crowd.core.events
+package crowd.events
 {
 	import flash.events.Event;
 	

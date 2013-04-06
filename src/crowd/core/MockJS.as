@@ -1,4 +1,4 @@
-package crowd.core.js_api
+package crowd.core
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

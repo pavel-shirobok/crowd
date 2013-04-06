@@ -1,9 +1,9 @@
-package crowd.core.soc_factory
+package crowd.core
 {
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
+	import crowd.core.ICrowdEnvironmentInitializer;
 	import crowd.core.ISocialType;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.rest_api.IRestApiInitializer;
+	import crowd.core.IJSApi;
+	import crowd.core.IRestApiInitializer;
 	
 	/**
 	 * ...

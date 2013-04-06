@@ -1,9 +1,9 @@
 package crowd.impl.mailru
 {
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.rest_api.IRestApiInitializer;
-	import crowd.core.soc_factory.ISocialFactory;
+	import crowd.core.ICrowdEnvironmentInitializer;
+	import crowd.core.IJSApi;
+	import crowd.core.IRestApiInitializer;
+	import crowd.core.ISocialFactory;
 	import crowd.impl.mailru.MailruEnvironment;
 	import crowd.impl.mailru.MailruJSApi;
 	import crowd.impl.mailru.MailruRestApiInitializer;

@@ -1,7 +1,7 @@
 package crowd.impl.odnoklassniki
 {
-	import crowd.core.js_api.AbstractJSApiDispatcher;
-	import crowd.core.js_api.IJSApi;
+	import crowd.core.AbstractJSApiDispatcher;
+	import crowd.core.IJSApi;
 	import crowd.SocialTypes;
 	import flash.events.AsyncErrorEvent;
 	import flash.events.SecurityErrorEvent;

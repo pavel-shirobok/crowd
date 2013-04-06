@@ -1,18 +1,20 @@
 package crowd.impl.odnoklassniki
 {
+	import com.ramshteks.as3.vars_holder.IVarsHolder;
+
 	import crowd.SocialTypes;
+	import crowd.core.ICrowdEnvironmentInitializer;
+	import crowd.core.IJSApi;
+	import crowd.core.IRequestBuilder;
+	import crowd.core.ISocialData;
+	import crowd.core.ISocialPermissions;
+	import crowd.utils.Param;
 	import crowd.utils.formatter.IFormatter;
 	import crowd.utils.formatter.XMLFormatter;
-	import crowd.utils.Param;
-	import flash.net.URLVariables;
-	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.environment.ISocialData;
-	import crowd.core.js_api.IJSApi;
-	import crowd.core.permissions.ISocialPermissions;
-	import crowd.core.request_builder.IRequestBuilder;
-	import crowd.impl.odnoklassniki.OdnoklassnikiInitData;
+
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks

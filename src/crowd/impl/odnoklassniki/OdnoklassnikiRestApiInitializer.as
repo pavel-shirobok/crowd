@@ -1,6 +1,6 @@
 package crowd.impl.odnoklassniki
 {
-	import crowd.core.rest_api.AbstractRestApiInitializer;
+	import crowd.core.AbstractRestApiInitializer;
 	import crowd.impl.odnoklassniki.OdnoklassnikiInitData;
 	import crowd.SocialTypes;
 	/**

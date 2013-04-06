@@ -1,28 +1,18 @@
 package crowd.impl.vkontakte
 {
-	import com.ramshteks.as3.StringUtils;
-	import crowd.core.environment.ISocialData;
 	import com.adobe.crypto.MD5;
+	import com.ramshteks.as3.StringUtils;
 	import com.ramshteks.as3.vars_holder.IVarsHolder;
-	import crowd.core.environment.ICrowdEnvironmentInitializer;
-	import crowd.core.permissions.ISocialPermissions;
-	import crowd.core.request_builder.IRequestBuilder;
-	import crowd.core.js_api.IJSApi;
+
 	import crowd.SocialTypes;
-	import crowd.utils.formatter.IFormatter;
-	import crowd.utils.formatter.XMLFormatter;
-	import crowd.utils.NetUtil;
-	import crowd.utils.Param;
-	import crowd.impl.vkontakte.VkontaktePermissions;
-	import crowd.impl.vkontakte.VkontakteInitData;
+	import crowd.core.*;
+	import crowd.utils.*;
+	import crowd.utils.formatter.*;
+
 	import flash.errors.IllegalOperationError;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
-	
-	/**
-	 * ...
-	 * @author 
-	 */
+
 	public class VkontakteEnvironment implements ICrowdEnvironmentInitializer, IRequestBuilder, ISocialData, ISocialPermissions
 	{
 		//ISocialData

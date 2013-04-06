@@ -1,7 +1,7 @@
 package crowd.impl.vkontakte
 {
-	import crowd.core.js_api.AbstractJSApiDispatcher;
-	import crowd.core.js_api.IJSApi;
+	import crowd.core.AbstractJSApiDispatcher;
+	import crowd.core.IJSApi;
 	import crowd.SocialTypes;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
