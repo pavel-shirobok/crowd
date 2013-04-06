@@ -11,8 +11,8 @@ package crowd.impl.mailru
 	import crowd.core.ISocialPermissions;
 	import crowd.utils.NetUtil;
 	import crowd.utils.Param;
-	import crowd.utils.formatter.IFormatter;
-	import crowd.utils.formatter.XMLFormatter;
+	import crowd.utils.IFormatter;
+	import crowd.utils.XMLFormatter;
 
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;

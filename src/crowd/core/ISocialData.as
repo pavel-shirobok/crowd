@@ -1,7 +1,7 @@
 package crowd.core
 {
 	import crowd.core.ISocialType;
-	import crowd.utils.formatter.IFormatter;
+	import crowd.utils.IFormatter;
 	
 	/**
 	 * ...

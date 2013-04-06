@@ -7,7 +7,6 @@ package crowd.impl.vkontakte
 	import crowd.SocialTypes;
 	import crowd.core.*;
 	import crowd.utils.*;
-	import crowd.utils.formatter.*;
 
 	import flash.errors.IllegalOperationError;
 	import flash.net.URLRequest;
@@ -113,15 +112,14 @@ package crowd.impl.vkontakte
 		
 		public function getAPIRequest(params:Object):URLRequest 
 		{
-			var n_params:Object = getStandardParams();// .concat(Param.fromObject(params));
+			var n_params:Object = getStandardParams();
 			
 			for (var key:String in params) {
+				//noinspection JSUnfilteredForInLoop
 				n_params[key] = params[key];
 			}
-			
-			var sig:String = NetUtil.getSignature(n_params, _user_id, _secret);
-			
-			n_params["sig"] = sig;
+
+			n_params["sig"] = NetUtil.getSignature(n_params, _user_id, _secret);
 			n_params["sid"] = _sid;
 			var req_vars:URLVariables = new URLVariables();
 			
@@ -175,7 +173,9 @@ package crowd.impl.vkontakte
 			var allowed:Array = [];
 			
 			for (var flag_in_map:String in _permissionsMap) {
+				//noinspection JSUnfilteredForInLoop
 				var str_flag:String = _permissionsMap[flag_in_map];
+				//noinspection JSUnfilteredForInLoop
 				var flag_in_map_int:int = int(parseInt(flag_in_map));
 				if ((flag & flag_in_map_int) != 0) {
 					allowed.push(str_flag);
@@ -196,7 +196,7 @@ package crowd.impl.vkontakte
 			return parseInt(permissions_flag_string);
 		}
 		
-		private function initPermissionsMap():Array {
+		private static function initPermissionsMap():Array {
 			var map:Array = [];
 			
 			map[0x000001] = VkontaktePermissions.NOTICE;
@@ -226,18 +226,21 @@ package crowd.impl.vkontakte
 		{
 			return _flashVarsHolder;
 		}
-		
-		public function get socialData():ISocialData 
+
+		//noinspection JSUnusedGlobalSymbols
+		public function get socialData():ISocialData
 		{
 			return this as ISocialData;
 		}
-		
-		public function get javascriptApi():IJSApi 
+
+		//noinspection JSUnusedGlobalSymbols
+		public function get javascriptApi():IJSApi
 		{
 			return _javaScript as IJSApi;
 		}
-		
-		public function get flashVars():IVarsHolder 
+
+		//noinspection JSUnusedGlobalSymbols
+		public function get flashVars():IVarsHolder
 		{
 			return _flashVarsHolder;
 		}

@@ -9,8 +9,8 @@ package crowd.impl.odnoklassniki
 	import crowd.core.ISocialData;
 	import crowd.core.ISocialPermissions;
 	import crowd.utils.Param;
-	import crowd.utils.formatter.IFormatter;
-	import crowd.utils.formatter.XMLFormatter;
+	import crowd.utils.IFormatter;
+	import crowd.utils.XMLFormatter;
 
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
