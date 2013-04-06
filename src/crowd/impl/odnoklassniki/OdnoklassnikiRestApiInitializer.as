@@ -1,8 +1,8 @@
 package crowd.impl.odnoklassniki
 {
-	import crowd.core.AbstractRestApiInitializer;
-	import crowd.impl.odnoklassniki.OdnoklassnikiInitData;
 	import crowd.SocialTypes;
+	import crowd.core.AbstractRestApiInitializer;
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks

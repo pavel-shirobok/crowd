@@ -1,10 +1,5 @@
 package crowd.core
 {
-	import crowd.core.ICrowdEnvironmentInitializer;
-	import crowd.core.ISocialType;
-	import crowd.core.IJSApi;
-	import crowd.core.IRestApiInitializer;
-	
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks

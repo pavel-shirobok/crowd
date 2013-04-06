@@ -1,14 +1,5 @@
 package crowd.core
 {
-	import crowd.core.rest_api.*;
-	import crowd.core.ICrowdEnvironment;
-	import crowd.core.IRestApiLoader;
-	import crowd.core.RestApiSynchronizer;
-	import crowd.core.ICrowdInitData;
-	/**
-	 * ...
-	 * @author Shirobok Pavel aka ramshteks
-	 */
 	public class AbstractRestApiInitializer implements IRestApiInitializer 
 	{
 		private var _synchronizer:RestApiSynchronizer;
