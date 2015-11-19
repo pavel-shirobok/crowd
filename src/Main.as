@@ -2,6 +2,7 @@ package
 {
 	import crowd.core.ISocialType;
 	import crowd.Crowd;
+	import crowd.impl.mailru.MailruInitData;
 	import crowd.impl.vkontakte.VkontakteInitData;
 
 	import flash.display.Sprite;
@@ -31,7 +32,7 @@ package
 			_crowd = new Crowd(true);
 			
 			_crowd.addInitData(new VkontakteInitData(stage));
-			//_crowd.addInitData(new MailRuInitData("sdfsdf"));
+			_crowd.addInitData(new MailruInitData("sdfsdf"));
 			
 			_crowd.debugFilePath = "debug_data.xml";
 			

@@ -132,7 +132,8 @@ package crowd
 			var rest_api_initializer:IRestApiInitializer = factory.getRestApiInitializer();
 			rest_api_initializer.setEnvironment(_environment);
 			rest_api_initializer.setSynchronizer(_synchronizer);
-
+			_rest_api = rest_api_initializer;
+			
 			dispatchLog("init js api");
 			var js:IJSApi = factory.getJSApi();
 			js.addEventListener(Event.CONNECT, onJSConnect);

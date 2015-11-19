@@ -85,7 +85,7 @@ package crowd.impl.mailru
 		
 		private function getStandardParams():Object 
 		{
-			return { app_id:"_application_id", format:formatFromInitData(), session_key:_session_key };
+			return { app_id:_application_id, format:formatFromInitData(), session_key:_session_key };
 		}
 		
 		private function formatFromInitData():String {

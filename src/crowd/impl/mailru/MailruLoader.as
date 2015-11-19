@@ -1,12 +1,13 @@
 package crowd.impl.mailru
 {
 	import com.adobe.serialization.json.JSON;
-	import crowd.core.IRestApiErrorReport;
+
+	import crowd.RestApiFormat;
 	import crowd.core.AbstractRestApiLoader;
+	import crowd.core.IRestApiErrorReport;
 	import crowd.core.RestApiErrorReport;
 	import crowd.core.RestApiSynchronizer;
-	import crowd.impl.mailru.MailruInitData;
-	import crowd.RestApiFormat;
+
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -14,7 +15,7 @@ package crowd.impl.mailru
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.net.URLVariables;
-	
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel (ramshteks@gmail.com)

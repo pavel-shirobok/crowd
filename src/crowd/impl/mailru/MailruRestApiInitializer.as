@@ -1,11 +1,9 @@
 package crowd.impl.mailru
 {
+	import crowd.SocialTypes;
 	import crowd.core.AbstractRestApiInitializer;
 	import crowd.core.IRestApiLoader;
-	import crowd.core.ICrowdInitData;
-	import crowd.impl.mailru.MailruInitData;
-	import crowd.SocialTypes;
-	
+
 	/**
 	 * ...
 	 * @author Shirobok Pavel aka ramshteks
